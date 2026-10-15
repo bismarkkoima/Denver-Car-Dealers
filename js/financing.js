@@ -65,7 +65,102 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   initInquiryForm(applyForm, {
     kind: "finance",
-    extra: () => ({ subject: "Finance application" }),
+    extra: () => ({ subject: "Finance application", prequalified_budget: applyForm.dataset.prequalBudget }),
     onSuccess: () => "Application received. A finance specialist will call you within one business day.",
   });
+});
+
+/* Pre-qualification: five questions -> estimated budget and matching cars. */
+document.addEventListener("DOMContentLoaded", async () => {
+  const { loadInventory, renderCards, money, loanFromPayment, SITE, initReveal } = window.DCD;
+  const AFFORDABILITY = 0.35; // share of net income lenders typically allow for all loan repayments
+  const root = document.querySelector("[data-prequal]");
+  const form = root.querySelector("[data-prequal-form]");
+  const questions = [...form.querySelectorAll("[data-q]")];
+  const bar = root.querySelector("[data-prequal-bar]");
+  const back = form.querySelector("[data-pq-back]");
+  const next = form.querySelector("[data-pq-next]");
+  const result = root.querySelector("[data-prequal-result]");
+  const matchesWrap = document.querySelector("[data-pq-matches-wrap]");
+  const applyForm = document.querySelector("[data-finance-form]");
+  const out = (k, v) => { root.querySelector(`[data-pq-${k}]`).textContent = v; };
+  let step = 0;
+  let budget = null;
+
+  function show(i) {
+    step = i;
+    questions.forEach((q, n) => { q.hidden = n !== i; });
+    back.hidden = i === 0;
+    next.textContent = i === questions.length - 1 ? "See my budget" : "Next";
+    bar.style.width = `${((i + 1) / (questions.length + 1)) * 100}%`;
+    const field = questions[i].querySelector("input:not([type=radio])");
+    if (field && i > 0) field.focus({ preventScroll: true });
+  }
+
+  function incomeBand(income) {
+    if (income < 100000) return "Below KSh 100,000";
+    if (income < 250000) return "KSh 100,000 – 250,000";
+    if (income <= 500000) return "KSh 250,000 – 500,000";
+    return "Above KSh 500,000";
+  }
+
+  async function finish() {
+    const f = form.elements;
+    const income = Number(f.income.value);
+    const debts = Number(f.debts.value) || 0;
+    const deposit = Number(f.deposit.value) || 0;
+    const term = Number(form.querySelector('input[name="term"]:checked').value);
+    const monthly = Math.max(0, income * AFFORDABILITY - debts);
+    const loan = loanFromPayment(monthly, SITE.finance.rate, term);
+    budget = Math.round((loan + deposit) / 10000) * 10000;
+
+    out("budget", budget > 0 ? `Up to ${money(budget)}` : "Let's talk");
+    out("monthly", money(monthly));
+    out("loan", money(loan));
+    out("deposit", money(deposit));
+    out("term", `${term} months · ~${SITE.finance.rate}% p.a.`);
+    out("note", monthly > 0
+      ? `Estimate based on repayments of up to ${AFFORDABILITY * 100}% of take-home pay, minus existing loans. Your final amount depends on the lender's checks.`
+      : "Your current repayments use most of your income. A finance specialist can still look at options such as a larger deposit or a longer term.");
+    form.hidden = true;
+    result.hidden = false;
+    bar.style.width = "100%";
+
+    // Pre-fill the application form below
+    applyForm.elements.monthly_income.value = incomeBand(income);
+    applyForm.elements.employment.value = form.querySelector('input[name="employment"]:checked').value;
+    applyForm.elements.deposit.value = money(deposit);
+    applyForm.elements.term.value = `${term} months`;
+    applyForm.dataset.prequalBudget = money(budget);
+
+    const cars = (await loadInventory())
+      .filter((c) => c.status === "available" && c.price <= budget)
+      .sort((a, b) => b.price - a.price)
+      .slice(0, 3);
+    matchesWrap.hidden = !cars.length;
+    if (cars.length) {
+      renderCards(matchesWrap.querySelector("[data-pq-matches]"), cars, { cta: "View details" });
+      matchesWrap.querySelector("[data-pq-all]").href = `vehicles.html?max=${budget}`;
+      initReveal();
+    }
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const fields = [...questions[step].querySelectorAll("input")];
+    const bad = fields.find((x) => !x.checkValidity());
+    if (bad) { bad.reportValidity(); return; }
+    if (step < questions.length - 1) show(step + 1);
+    else finish();
+  });
+  back.addEventListener("click", () => show(step - 1));
+  root.querySelector("[data-pq-restart]").addEventListener("click", () => {
+    form.reset();
+    form.hidden = false;
+    result.hidden = true;
+    matchesWrap.hidden = true;
+    delete applyForm.dataset.prequalBudget;
+    show(0);
+  });
+  show(0);
 });

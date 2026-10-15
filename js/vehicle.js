@@ -1,6 +1,6 @@
 /* Vehicle detail page: vehicle.html?id=<slug> */
 document.addEventListener("DOMContentLoaded", async () => {
-  const { loadInventory, carCard, esc, money, km, monthlyPayment, SITE, waHref, initInquiryForm, initReveal } = window.DCD;
+  const { loadInventory, renderCards, priceHtml, esc, money, km, monthlyPayment, SITE, ICONS, waHref, toast, syncListButtons, initInquiryForm, initReveal } = window.DCD;
   const root = document.querySelector("[data-vehicle]");
   const id = new URLSearchParams(location.search).get("id");
   const cars = await loadInventory();
@@ -54,7 +54,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p class="eyebrow muted">${esc(v.year)} · ${esc(v.trim || v.body_type)}</p>
           <h1 class="display display--md" style="margin-top: 10px">${esc(v.make)} ${esc(v.model)}</h1>
         </div>
-        <p class="vd__price">${sold ? "Sold" : money(v.price)}</p>
+        <p class="vd__price">${priceHtml(v)}</p>
+        ${v.on_offer ? `<p class="vd__offer">Offer: save ${money(v.was_price - v.price)}</p>` : ""}
         ${sold ? "" : `<p class="vd__monthly">From approx. <strong>${money(monthly)}/mo</strong> with ${depositPct}% deposit · <a href="financing.html?vehicle=${encodeURIComponent(v.slug)}#calculator">Customise</a></p>`}
         <div class="vd__actions">
           ${sold
@@ -63,9 +64,60 @@ document.addEventListener("DOMContentLoaded", async () => {
                <a class="btn btn--ghost" href="financing.html?vehicle=${encodeURIComponent(v.slug)}#apply">Apply for financing</a>`}
           <a class="btn btn--ghost" href="${waHref(`Hi, I'm interested in the ${v.title} (${location.href}).`)}" target="_blank" rel="noopener">WhatsApp about this car</a>
         </div>
+        <div class="vd__tools">
+          <button type="button" class="tool-btn" data-save="${esc(v.slug)}" data-label aria-pressed="false">${ICONS.heart}<span>Save</span></button>
+          <button type="button" class="tool-btn" data-compare="${esc(v.slug)}" data-label aria-pressed="false">${ICONS.compare}<span>Compare</span></button>
+          <button type="button" class="tool-btn" data-share>${ICONS.share}<span>Share</span></button>
+        </div>
         <dl class="spec-grid">${specs.map(([k, val]) => `<div><dt>${k}</dt><dd>${esc(val)}</dd></div>`).join("")}</dl>
       </aside>
     </div>`;
+
+  syncListButtons();
+
+  // Share: native share sheet on phones, copy link elsewhere
+  root.querySelector("[data-share]").addEventListener("click", async () => {
+    const shareData = { title: v.title, text: `${v.title} at ${SITE.name}`, url: location.href };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (_) { /* cancelled */ }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(location.href);
+      toast("Link copied to clipboard");
+    } catch (_) {
+      toast(`Copy this link: ${esc(location.href)}`);
+    }
+  });
+
+  // Structured data so search engines can show price and photos
+  const ld = document.createElement("script");
+  ld.type = "application/ld+json";
+  ld.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Car",
+    name: v.title,
+    brand: { "@type": "Brand", name: v.make },
+    model: v.model,
+    vehicleModelDate: String(v.year),
+    bodyType: v.body_type,
+    fuelType: v.fuel,
+    vehicleTransmission: v.transmission,
+    color: v.exterior_color || undefined,
+    mileageFromOdometer: { "@type": "QuantitativeValue", value: v.mileage, unitCode: "KMT" },
+    itemCondition: v.condition === "New" ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition",
+    description: v.description || undefined,
+    image: v.images.map((src) => new URL(src, location.href).href),
+    url: location.href,
+    offers: {
+      "@type": "Offer",
+      price: v.price,
+      priceCurrency: "KES",
+      availability: v.status === "sold" ? "https://schema.org/SoldOut" : "https://schema.org/InStock",
+      seller: { "@type": "AutoDealer", name: SITE.name },
+    },
+  }).replace(/</g, "\\u003c");
+  document.head.appendChild(ld);
 
   // Gallery
   if (v.images.length > 1) {
@@ -108,7 +160,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     .map(({ c }) => c);
   if (similar.length) {
     document.querySelector("[data-similar]").hidden = false;
-    document.querySelector("[data-similar-grid]").innerHTML = similar.map((c) => carCard(c, { cta: "View details" })).join("");
+    renderCards(document.querySelector("[data-similar-grid]"), similar, { cta: "View details" });
   }
   initReveal();
 });

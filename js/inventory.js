@@ -1,6 +1,6 @@
 /* Inventory page: filters, sorting and URL-synced state (?body=SUV&make=Toyota). */
 document.addEventListener("DOMContentLoaded", async () => {
-  const { loadInventory, carCard, esc } = window.DCD;
+  const { loadInventory, renderCards, esc } = window.DCD;
   const form = document.querySelector("[data-filters]");
   const sort = document.querySelector("[data-sort]");
   const grid = document.querySelector("[data-grid]");
@@ -19,7 +19,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Restore state from the URL
   const url = new URLSearchParams(location.search);
+  const maxSelect = form.elements.max;
+  if (url.get("max") && ![...maxSelect.options].some((o) => o.value === url.get("max")) && Number(url.get("max")) > 0) {
+    maxSelect.add(new Option(`Up to ${window.DCD.money(url.get("max"))}`, url.get("max")));
+  }
   ["q", "make", "body", "fuel", "max"].forEach((k) => { if (url.get(k)) form.elements[k].value = url.get(k); });
+  form.elements.offers.checked = url.get("offers") === "1";
   if (url.get("sort")) sort.value = url.get("sort");
   let condition = url.get("condition") || "";
 
@@ -41,12 +46,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       .filter((c) => !f.fuel || c.fuel === f.fuel)
       .filter((c) => !f.max || c.price <= Number(f.max))
       .filter((c) => !condition || c.condition === condition)
+      .filter((c) => !f.offers || c.on_offer)
       .sort(sorters[sort.value] || sorters.featured);
 
-    grid.innerHTML = list.map((c) => carCard(c, { cta: "View details" })).join("");
+    renderCards(grid, list, { cta: "View details" });
     grid.hidden = !list.length;
     empty.hidden = !!list.length;
-    count.textContent = `${list.length} vehicle${list.length === 1 ? "" : "s"}${condition ? ` · ${condition}` : ""}`;
+    count.textContent = `${list.length} vehicle${list.length === 1 ? "" : "s"}${condition ? ` · ${condition}` : ""}${f.offers ? " · On offer" : ""}`;
 
     const next = new URLSearchParams();
     Object.entries(f).forEach(([k, v]) => v && next.set(k, v));

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a Service — Denver Car Dealership</title>
+  <meta name="description" content="Book maintenance, diagnostics, tyres, bodywork or a pre-purchase inspection at Denver Car Dealership, Eldoret.">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+  <script defer src="js/service.js"></script>
+</head>
+<body class="has-hero">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="hero hero--short">
+      <div class="hero__media"><img src="images/cars/lexus-lx600-2.jpg" alt=""></div>
+      <div class="hero__content">
+        <p class="eyebrow">Service</p>
+        <h1 class="display display--xl">Keep it<br>running right</h1>
+        <p class="lead">Maintenance, diagnostics and repairs by people who know premium vehicles. Book online and we'll confirm your slot.</p>
+        <a class="btn btn--light" href="#book">Book a service</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div><p class="eyebrow muted">What we do</p><h2 class="display display--lg">Services</h2></div>
+        </div>
+        <div class="service-grid">
+          <article class="service-card reveal"><span data-site="wrench-icon"></span><h3 class="display display--sm">Routine maintenance</h3><p>Oil and filter changes, fluids, brakes and scheduled manufacturer services.</p></article>
+          <article class="service-card reveal reveal-delay-1"><span data-site="check-icon"></span><h3 class="display display--sm">Diagnostics</h3><p>Computer diagnostics for warning lights, electrical faults and drivability issues.</p></article>
+          <article class="service-card reveal reveal-delay-2"><span data-site="car-icon"></span><h3 class="display display--sm">Tyres &amp; alignment</h3><p>Fitting, balancing, wheel alignment and suspension checks.</p></article>
+          <article class="service-card reveal"><span data-site="grid-icon"></span><h3 class="display display--sm">Bodywork &amp; paint</h3><p>Dent repair, scratches, panel work and full resprays.</p></article>
+          <article class="service-card reveal reveal-delay-1"><span data-site="search-icon"></span><h3 class="display display--sm">Pre-purchase inspection</h3><p>Buying privately? We'll inspect the car top to bottom before you pay.</p></article>
+          <article class="service-card reveal reveal-delay-2"><span data-site="key-icon"></span><h3 class="display display--sm">Detailing</h3><p>Interior deep clean, machine polish and paint protection.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="book">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow muted">Book online</p>
+            <h2 class="display display--lg">Schedule a service</h2>
+            <p class="lead muted" style="margin-top: 16px">Choose what you need and when. We'll call to confirm the time and give you an estimate before any work starts.</p>
+          </div>
+        </div>
+        <form class="form-wrap" data-service-form novalidate>
+          <div class="form-steps">
+            <fieldset class="form-step">
+              <legend>1. Your vehicle</legend>
+              <label class="field"><span>Make</span><input name="make" placeholder="e.g. Toyota" required></label>
+              <label class="field"><span>Model</span><input name="model" placeholder="e.g. Land Cruiser" required></label>
+              <label class="field"><span>Year</span><input name="year" type="number" min="1980" max="2027"></label>
+              <label class="field"><span>Registration <em>(optional)</em></span><input name="registration" placeholder="e.g. KDA 123A" autocapitalize="characters"></label>
+              <label class="field"><span>Mileage (km) <em>(optional)</em></span><input name="mileage" type="number" min="0"></label>
+            </fieldset>
+
+            <fieldset class="form-step">
+              <legend>2. What you need</legend>
+              <div class="choice-row choice-row--stack" data-services>
+                <label class="choice"><input type="checkbox" name="svc" value="Routine maintenance"><span>Routine maintenance</span></label>
+                <label class="choice"><input type="checkbox" name="svc" value="Diagnostics"><span>Diagnostics / warning light</span></label>
+                <label class="choice"><input type="checkbox" name="svc" value="Brakes"><span>Brakes</span></label>
+                <label class="choice"><input type="checkbox" name="svc" value="Tyres & alignment"><span>Tyres &amp; alignment</span></label>
+                <label class="choice"><input type="checkbox" name="svc" value="Bodywork & paint"><span>Bodywork &amp; paint</span></label>
+                <label class="choice"><input type="checkbox" name="svc" value="Pre-purchase inspection"><span>Pre-purchase inspection</span></label>
+                <label class="choice"><input type="checkbox" name="svc" value="Detailing"><span>Detailing</span></label>
+                <label class="choice"><input type="checkbox" name="svc" value="Other"><span>Something else</span></label>
+              </div>
+              <label class="field"><span>Describe the issue <em>(optional)</em></span><textarea name="message" rows="4" placeholder="Noises, warning lights, when it started…"></textarea></label>
+            </fieldset>
+
+            <fieldset class="form-step">
+              <legend>3. When &amp; contact</legend>
+              <label class="field"><span>Preferred date</span><input name="preferred_date" type="date" required data-min-today></label>
+              <label class="field"><span>Drop-off</span>
+                <select name="drop_off">
+                  <option>I'll bring it in</option>
+                  <option>Please collect it (Eldoret area)</option>
+                </select>
+              </label>
+              <label class="field"><span>Full name</span><input name="name" autocomplete="name" required></label>
+              <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" placeholder="+254 7xx xxx xxx" required></label>
+              <label class="field"><span>Email <em>(optional)</em></span><input name="email" type="email" autocomplete="email"></label>
+            </fieldset>
+          </div>
+          <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+          <div class="form-footer">
+            <label class="check"><input type="checkbox" name="consent" value="yes" required> I agree that Denver Car Dealership may contact me about this booking. <a href="about.html#privacy">Privacy statement</a></label>
+            <button class="btn btn--light" type="submit">Request booking</button>
+          </div>
+          <div class="form-status" role="status" aria-live="polite" style="margin-top: 20px"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section section--mist">
+      <div class="container split">
+        <div class="split__media"><img src="images/cars/mercedes-gle63-coupe-3.jpg" alt="Mercedes-AMG cockpit" loading="lazy"></div>
+        <div>
+          <p class="eyebrow muted">Bought from us?</p>
+          <h2 class="display display--lg" style="margin-top: 14px">We're still here</h2>
+          <p class="lead muted">Every car we sell comes with after-sales support. Questions about servicing, parts or paperwork? Just call or WhatsApp.</p>
+          <div class="btn-row">
+            <a class="btn" data-site="phone-card" href="#">Call the service desk</a>
+            <a class="btn btn--ghost" data-site="whatsapp" data-text="Hi, I have a service question." target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

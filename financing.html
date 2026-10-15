@@ -30,8 +30,8 @@
         <h1 class="display display--xl">Drive it home<br>sooner</h1>
         <p class="lead">Flexible car loans and payment plans arranged in-house with trusted banks and asset-finance partners.</p>
         <div class="btn-row">
-          <a class="btn btn--light" href="#calculator">Calculate payments</a>
-          <a class="btn btn--light btn--ghost" href="#apply">Apply for credit</a>
+          <a class="btn btn--light" href="#prequalify">Get pre-qualified</a>
+          <a class="btn btn--light btn--ghost" href="#calculator">Calculate payments</a>
         </div>
       </div>
     </section>
@@ -48,7 +48,7 @@
             <h3 class="display display--sm">Apply for credit</h3>
             <p>Let's start the process together. Get a decision in as little as 48 hours.</p>
           </a>
-          <a class="offer reveal reveal-delay-1" href="vehicles.html">
+          <a class="offer reveal reveal-delay-1" href="vehicles.html?offers=1">
             <div class="offer__media"><img src="images/cars/alfa-romeo-giulietta-1.jpg" alt="Alfa Romeo Giulietta" loading="lazy"></div>
             <h3 class="display display--sm">Special offers</h3>
             <p>Seasonal deals and reduced deposits on selected vehicles in stock.</p>
@@ -64,6 +64,87 @@
             <p>Flexible and convenient terms from 12 to 72 months to suit your budget.</p>
           </a>
         </div>
+      </div>
+    </section>
+
+    <!-- Pre-qualification -->
+    <section class="section dark" id="prequalify">
+      <div class="container split" style="align-items: start">
+        <div>
+          <p class="eyebrow muted">Get pre-qualified</p>
+          <h2 class="display display--lg" style="margin-top: 14px">Know your budget in 60 seconds</h2>
+          <p class="lead muted">Answer five quick questions to see roughly how much you could borrow and which cars fit. No credit check and nothing is sent until you choose to apply.</p>
+        </div>
+        <div class="prequal" data-prequal>
+          <div class="prequal__bar"><span data-prequal-bar></span></div>
+          <form data-prequal-form novalidate>
+            <div class="prequal__q" data-q>
+              <p class="eyebrow muted">Question 1 of 5</p>
+              <label class="display display--sm" for="pq-income">What's your net monthly income?</label>
+              <div class="money-input"><span>KSh</span><input id="pq-income" name="income" type="number" min="10000" step="1000" placeholder="e.g. 250000" required></div>
+              <p class="muted small-note">Take-home pay after tax, including any regular business income.</p>
+            </div>
+            <div class="prequal__q" data-q hidden>
+              <p class="eyebrow muted">Question 2 of 5</p>
+              <label class="display display--sm" for="pq-debts">Existing monthly loan repayments?</label>
+              <div class="money-input"><span>KSh</span><input id="pq-debts" name="debts" type="number" min="0" step="1000" value="0" required></div>
+              <p class="muted small-note">Other loans, car payments or credit cards. Enter 0 if none.</p>
+            </div>
+            <div class="prequal__q" data-q hidden>
+              <p class="eyebrow muted">Question 3 of 5</p>
+              <label class="display display--sm" for="pq-deposit">How much deposit can you put down?</label>
+              <div class="money-input"><span>KSh</span><input id="pq-deposit" name="deposit" type="number" min="0" step="10000" placeholder="e.g. 1500000" required></div>
+              <p class="muted small-note">Cash, savings or the value of a trade-in.</p>
+            </div>
+            <div class="prequal__q" data-q hidden>
+              <p class="eyebrow muted">Question 4 of 5</p>
+              <span class="display display--sm">How long would you like to pay?</span>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="term" value="24" required><span>24 mo</span></label>
+                <label class="choice"><input type="radio" name="term" value="36"><span>36 mo</span></label>
+                <label class="choice"><input type="radio" name="term" value="48" checked><span>48 mo</span></label>
+                <label class="choice"><input type="radio" name="term" value="60"><span>60 mo</span></label>
+                <label class="choice"><input type="radio" name="term" value="72"><span>72 mo</span></label>
+              </div>
+            </div>
+            <div class="prequal__q" data-q hidden>
+              <p class="eyebrow muted">Question 5 of 5</p>
+              <span class="display display--sm">How are you employed?</span>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="employment" value="Employed (permanent)" required><span>Permanent</span></label>
+                <label class="choice"><input type="radio" name="employment" value="Employed (contract)"><span>Contract</span></label>
+                <label class="choice"><input type="radio" name="employment" value="Self-employed / business owner"><span>Self-employed</span></label>
+                <label class="choice"><input type="radio" name="employment" value="Other"><span>Other</span></label>
+              </div>
+            </div>
+            <div class="prequal__nav" data-prequal-nav>
+              <button class="btn btn--light btn--ghost" type="button" data-pq-back hidden>Back</button>
+              <button class="btn btn--light" type="submit" data-pq-next>Next</button>
+            </div>
+          </form>
+          <div class="prequal__result" data-prequal-result hidden>
+            <p class="eyebrow muted">Your estimated budget</p>
+            <p class="prequal__budget" data-pq-budget></p>
+            <dl class="calc__breakdown">
+              <div><dt>Monthly payment up to</dt><dd data-pq-monthly></dd></div>
+              <div><dt>Loan amount up to</dt><dd data-pq-loan></dd></div>
+              <div><dt>Your deposit</dt><dd data-pq-deposit></dd></div>
+              <div><dt>Term · rate</dt><dd data-pq-term></dd></div>
+            </dl>
+            <p class="calc__note" data-pq-note></p>
+            <div class="btn-row">
+              <a class="btn btn--light" href="#apply" data-pq-apply>Continue to application</a>
+              <button class="btn btn--light btn--ghost" type="button" data-pq-restart>Start over</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container" data-pq-matches-wrap hidden>
+        <div class="section-head" style="margin-top: 72px">
+          <div><p class="eyebrow muted">Within your budget</p><h3 class="display display--md">Cars that fit</h3></div>
+          <a class="link-arrow" href="vehicles.html" data-pq-all>See all</a>
+        </div>
+        <div class="car-grid" data-pq-matches></div>
       </div>
     </section>
 

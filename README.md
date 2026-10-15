@@ -2,8 +2,9 @@
 
 Website and admin panel for Denver Car Dealership, Eldoret: *where value meets the road*.
 
-- **Website:** Home, Vehicles (search and filters), Vehicle details, Financing (payment calculator and credit application), Test Drive, Contact, About
-- **Admin panel** (`/admin`): manage inventory and photos, and read every message, test-drive request and finance application in one inbox
+- **Website:** Home, Vehicles (search, filters, current offers), Vehicle details, Financing (pre-qualification, payment calculator, credit application), Test Drive, Sell or Trade In (with photo upload), Service booking, Compare, Saved vehicles, Contact, About
+- **Shopping tools** like a premium carmaker's site: search, save cars, compare up to three side by side, newsletter signup
+- **Admin panel** (`/admin`): manage inventory, photos and offer prices, and read every message, test drive, finance application, car offer request and service booking in one inbox, with optional email alerts
 
 ## Run it locally
 
@@ -26,9 +27,10 @@ The first time you open `/admin` it asks you to create your admin username and p
 | Page | What you can do |
 | --- | --- |
 | **Dashboard** | Stock counts, total stock value, newest inquiries |
-| **Inventory** | Add, edit or delete cars; upload several photos and pick the cover; mark a car *Available*, *Reserved*, *Sold* or *Draft* (hidden from the website); feature cars on the home page |
-| **Inquiries** | Contact messages, test-drive bookings and finance applications; filter by type and status; reply by email, phone or WhatsApp in one click; export everything to CSV |
-| **Account** | Change your password |
+| **Inventory** | Add, edit or delete cars; upload several photos and pick the cover; mark a car *Available*, *Reserved*, *Sold* or *Draft* (hidden from the website); feature cars on the home page; set a **Was price** to put a car on offer |
+| **Inquiries** | Contact messages, test drives, finance applications, sell/trade-in requests (with the customer's photos) and service bookings; filter by type and status; reply by email, phone or WhatsApp in one click; export to CSV |
+| **Subscribers** | Newsletter signups (Inquiries → Subscribers), exportable to CSV |
+| **Account** | Change your password; check email alerts and send a test email |
 
 Add another admin from the command line:
 
@@ -42,6 +44,20 @@ Import many cars at once from a JSON or CSV file:
 python admin/import-car.py my-cars.csv            # adds to the current inventory
 python admin/import-car.py my-cars.json --replace # replaces the whole inventory
 ```
+
+## Email alerts
+
+Get an email for every new inquiry by setting these environment variables on your host (then restart):
+
+| Variable | Example |
+| --- | --- |
+| `DCD_SMTP_HOST` | `smtp.gmail.com` |
+| `DCD_SMTP_PORT` | `587` |
+| `DCD_SMTP_USER` | the email address that sends the alerts |
+| `DCD_SMTP_PASSWORD` | its password. For Gmail, turn on 2-step verification and create an [App password](https://myaccount.google.com/apppasswords) |
+| `DCD_NOTIFY_EMAIL` | where alerts go (comma-separate several); defaults to `DCD_SMTP_USER` |
+
+Then use **Admin → Account → Send a test email** to check it. Replies to an alert go straight to the customer. If email isn't set up, everything still arrives in the admin inbox.
 
 ## Change contact details
 
@@ -113,4 +129,5 @@ The production start command is in `Procfile`: `gunicorn app:app --workers 1 --t
 - [ ] Replace the placeholder email and phone in the `SITE` block of `js/main.js`
 - [ ] Replace the 8 sample cars (made-up prices) with your real stock in `/admin`
 - [ ] Update the social media links in `js/main.js`
+- [ ] Set up email alerts (see above) and send a test from Admin → Account
 - [ ] Back up the data folder (`instance/` and `uploads/`, or `DCD_DATA_DIR`) regularly

@@ -9,6 +9,20 @@
   <meta property="og:description" content="Where value meets the road. Premium vehicles, flexible financing and test drives in Eldoret.">
   <meta property="og:image" content="images/cars/lexus-lx600-1.jpg">
   <meta name="theme-color" content="#0b0b0c">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AutoDealer",
+    "name": "Denver Car Dealership",
+    "slogan": "Where value meets the road",
+    "telephone": "+254712345678",
+    "email": "sales@denzeldealerships.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Eldoret", "addressCountry": "KE" },
+    "geo": { "@type": "GeoCoordinates", "latitude": 0.5221707, "longitude": 35.2747672 },
+    "openingHours": "Mo-Sa 08:00-18:00",
+    "priceRange": "KSh"
+  }
+  </script>
   <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -67,6 +81,31 @@
       </div>
     </section>
 
+    <!-- Shopping tools strip -->
+    <section class="tools-strip dark">
+      <div class="container tools-strip__inner">
+        <a class="tools-strip__item" href="vehicles.html"><span data-site="search-icon"></span>Search inventory</a>
+        <a class="tools-strip__item" href="financing.html#prequalify"><span data-site="check-icon"></span>Get pre-qualified</a>
+        <a class="tools-strip__item" href="financing.html#calculator"><span data-site="calc-icon"></span>Estimate payments</a>
+        <a class="tools-strip__item" href="sell.html"><span data-site="swap-icon"></span>Value your trade</a>
+        <a class="tools-strip__item" href="compare.html"><span data-site="grid-icon"></span>Compare vehicles</a>
+      </div>
+    </section>
+
+    <!-- Current offers -->
+    <section class="section section--mist" data-offers hidden>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow muted">Limited time</p>
+            <h2 class="display display--lg">Current offers</h2>
+          </div>
+          <a class="link-arrow" href="vehicles.html?offers=1">All offers</a>
+        </div>
+        <div class="car-grid" data-offers-grid></div>
+      </div>
+    </section>
+
     <!-- Performance banner -->
     <section class="banner">
       <div class="banner__media">
@@ -121,11 +160,11 @@
             <p>Pick a car and a time. We'll have it ready at the showroom, or bring it to you.</p>
             <span class="link-arrow">Schedule now</span>
           </a>
-          <a class="tile reveal reveal-delay-2" href="contact.html?subject=Trade-in">
+          <a class="tile reveal reveal-delay-2" href="sell.html">
             <div class="tile__media"><img src="images/cars/toyota-land-cruiser-200-1.jpg" alt="Toyota Land Cruiser on the road" loading="lazy"></div>
             <h3 class="display display--sm">Trade in your car</h3>
             <p>Get a fair valuation for your current vehicle and put it towards your next one.</p>
-            <span class="link-arrow">Get a valuation</span>
+            <span class="link-arrow">Get an offer</span>
           </a>
         </div>
       </div>
