@@ -14,4 +14,26 @@
   </form>
   <p class="muted small">Need another admin login? From the project folder run <code>flask --app app create-admin NAME</code>.</p>
 </section>
+
+<section class="panel narrow">
+  <h2>Email alerts</h2>
+  {% if email_ready %}
+  <p><span class="pill status-available">On</span></p>
+  <p class="muted" style="margin: 12px 0 18px">New messages, test drive bookings, finance applications, car offers and service bookings are emailed to <strong>{{ email.to|join(', ') }}</strong> from {{ email.user }}.</p>
+  {% else %}
+  <p><span class="pill status-sold">Off</span></p>
+  <p class="muted" style="margin: 12px 0 12px">Everything still arrives in this inbox. To also get an email for each new inquiry, set these environment variables on your host and restart the site:</p>
+  <dl class="dl" style="margin-bottom: 18px">
+    <dt>DCD_SMTP_HOST</dt><dd>e.g. <code>smtp.gmail.com</code></dd>
+    <dt>DCD_SMTP_PORT</dt><dd><code>587</code></dd>
+    <dt>DCD_SMTP_USER</dt><dd>the email address that sends alerts</dd>
+    <dt>DCD_SMTP_PASSWORD</dt><dd>its password (Gmail: create an <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener">App password</a>)</dd>
+    <dt>DCD_NOTIFY_EMAIL</dt><dd>where alerts go (optional; defaults to the sending address)</dd>
+  </dl>
+  {% endif %}
+  <form method="post" action="{{ url_for('admin.test_email') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button class="btn ghost" type="submit">Send a test email</button>
+  </form>
+</section>
 {% endblock %}

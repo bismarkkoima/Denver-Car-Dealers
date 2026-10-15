@@ -1,6 +1,6 @@
 /* Home page: lineup rail with body-type tabs. */
 document.addEventListener("DOMContentLoaded", async () => {
-  const { loadInventory, carCard, esc } = window.DCD;
+  const { loadInventory, renderCards, esc } = window.DCD;
   const rail = document.querySelector("[data-lineup]");
   const tabs = document.querySelector("[data-lineup-tabs]");
   const cars = (await loadInventory()).filter((c) => c.status !== "sold");
@@ -11,9 +11,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const show = (body) => {
     const list = cars.filter((c) => !body || c.body_type === body).sort((a, b) => b.featured - a.featured);
-    rail.innerHTML = list.length
-      ? list.map((c) => carCard(c, { cta: "Explore", specs: false })).join("")
-      : '<p class="muted">New stock arriving soon. Check back shortly.</p>';
+    if (list.length) renderCards(rail, list, { cta: "Explore", specs: false });
+    else rail.innerHTML = '<p class="muted">New stock arriving soon. Check back shortly.</p>';
     rail.scrollTo({ left: 0 });
   };
 
@@ -32,4 +31,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
   show("");
+
+  // Current offers
+  const offers = cars.filter((c) => c.on_offer).sort((a, b) => (b.was_price - b.price) - (a.was_price - a.price)).slice(0, 3);
+  if (offers.length) {
+    document.querySelector("[data-offers]").hidden = false;
+    renderCards(document.querySelector("[data-offers-grid]"), offers, { cta: "View offer" });
+  }
 });

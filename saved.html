@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saved Vehicles — Denver Car Dealership</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/mona-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+  <script defer src="js/saved.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="page-intro">
+      <div class="container">
+        <p class="eyebrow muted">Your garage</p>
+        <h1 class="display display--xl" style="margin-top: 14px">Saved vehicles</h1>
+        <div class="results-bar" style="margin: 28px 0 0">
+          <p class="lead muted" style="margin: 0" data-saved-summary>Cars you save are kept on this device.</p>
+          <div class="btn-row" data-saved-actions hidden>
+            <button type="button" class="btn btn--ghost" data-compare-saved>Compare saved</button>
+            <button type="button" class="link-btn" data-clear-saved>Clear all</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section section--tight" style="padding-top: 0">
+      <div class="container">
+        <div class="car-grid" data-saved-grid></div>
+        <div class="empty-state" data-saved-empty hidden>
+          <h2 class="display display--md">No saved vehicles yet</h2>
+          <p>Tap the heart on any car to keep it here while you decide.</p>
+          <a class="btn" href="vehicles.html">Browse vehicles</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

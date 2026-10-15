@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sell or Trade In Your Car — Denver Car Dealership</title>
+  <meta name="description" content="Get an offer for your car from Denver Car Dealership, Eldoret. Sell outright or trade in towards your next vehicle.">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/mona-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+  <script defer src="js/sell.js"></script>
+</head>
+<body class="has-hero">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="hero hero--short">
+      <div class="hero__media"><img src="images/cars/mercedes-gle63-coupe-2.jpg" alt=""></div>
+      <div class="hero__content">
+        <p class="eyebrow">Sell or trade in</p>
+        <h1 class="display display--xl">Your car,<br>valued fairly</h1>
+        <p class="lead">Tell us about your car and send a few photos. We'll come back with an offer, whether you want cash or a trade-in towards your next drive.</p>
+        <a class="btn btn--light" href="#get-offer">Get my offer</a>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container">
+        <ol class="steps" style="color: var(--ink)">
+          <li class="reveal"><h3 class="display display--sm">Tell us about it</h3><p>Four quick steps: the car, its condition, a few photos and how to reach you.</p></li>
+          <li class="reveal reveal-delay-1"><h3 class="display display--sm">Get your offer</h3><p>Our team reviews your details and contacts you with an offer, usually within one business day.</p></li>
+          <li class="reveal reveal-delay-2"><h3 class="display display--sm">Get paid or upgrade</h3><p>Bring the car in for a quick check. Take payment, or put the value straight towards a car from our showroom.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section dark" id="get-offer">
+      <div class="container">
+        <form class="wizard" data-sell-form novalidate>
+          <div class="wizard__head">
+            <p class="eyebrow muted">Get an offer</p>
+            <ol class="wizard__progress" data-progress>
+              <li aria-current="step">Vehicle</li><li>Condition</li><li>Photos</li><li>Contact</li>
+            </ol>
+          </div>
+
+          <fieldset class="wizard__step" data-step>
+            <legend class="display display--md">About your car</legend>
+            <div class="form">
+              <label class="field"><span>Make</span><input name="make" placeholder="e.g. Toyota" required></label>
+              <label class="field"><span>Model</span><input name="model" placeholder="e.g. Prado" required></label>
+              <label class="field"><span>Year</span><input name="year" type="number" min="1980" max="2027" placeholder="e.g. 2016" required></label>
+              <label class="field"><span>Mileage (km)</span><input name="mileage" type="number" min="0" placeholder="e.g. 85000" required></label>
+              <label class="field"><span>Transmission</span>
+                <select name="transmission"><option>Automatic</option><option>Manual</option></select>
+              </label>
+              <label class="field"><span>Fuel</span>
+                <select name="fuel"><option>Petrol</option><option>Diesel</option><option>Hybrid</option><option>Electric</option></select>
+              </label>
+              <label class="field"><span>Registration number <em>(optional)</em></span><input name="registration" placeholder="e.g. KDA 123A" autocapitalize="characters"></label>
+              <label class="field"><span>Colour <em>(optional)</em></span><input name="colour"></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="wizard__step" data-step hidden>
+            <legend class="display display--md">Condition</legend>
+            <div class="field">
+              <span>Overall condition</span>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="condition" value="Excellent" required><span>Excellent</span></label>
+                <label class="choice"><input type="radio" name="condition" value="Good"><span>Good</span></label>
+                <label class="choice"><input type="radio" name="condition" value="Fair"><span>Fair</span></label>
+                <label class="choice"><input type="radio" name="condition" value="Needs work"><span>Needs work</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <span>Has it been in an accident?</span>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="accident_history" value="No" required><span>No</span></label>
+                <label class="choice"><input type="radio" name="accident_history" value="Minor"><span>Minor</span></label>
+                <label class="choice"><input type="radio" name="accident_history" value="Major"><span>Major</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <span>Service history</span>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="service_history" value="Full" required><span>Full</span></label>
+                <label class="choice"><input type="radio" name="service_history" value="Partial"><span>Partial</span></label>
+                <label class="choice"><input type="radio" name="service_history" value="None"><span>None</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <span>Is there a loan on the car?</span>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="outstanding_loan" value="No" required><span>No</span></label>
+                <label class="choice"><input type="radio" name="outstanding_loan" value="Yes"><span>Yes</span></label>
+              </div>
+            </div>
+            <label class="field"><span>Anything else we should know? <em>(optional)</em></span><textarea name="message" rows="3" placeholder="Recent repairs, new tyres, scratches, modifications…"></textarea></label>
+          </fieldset>
+
+          <fieldset class="wizard__step" data-step hidden>
+            <legend class="display display--md">Photos</legend>
+            <p class="muted">Clear photos get you a more accurate offer. Try the front, back, both sides, the dashboard (showing mileage) and the seats. Up to 8 photos.</p>
+            <label class="dropzone-lg" data-dropzone>
+              <input type="file" accept="image/jpeg,image/png,image/webp" multiple data-photo-input>
+              <span data-site="share-icon" aria-hidden="true"></span>
+              <strong>Add photos</strong>
+              <span>Tap to choose, or drag photos here</span>
+            </label>
+            <div class="photo-previews" data-previews></div>
+          </fieldset>
+
+          <fieldset class="wizard__step" data-step hidden>
+            <legend class="display display--md">Your details</legend>
+            <div class="field">
+              <span>What would you like to do?</span>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="intent" value="Sell outright" checked><span>Sell for cash</span></label>
+                <label class="choice"><input type="radio" name="intent" value="Trade in"><span>Trade in</span></label>
+                <label class="choice"><input type="radio" name="intent" value="Not sure yet"><span>Not sure yet</span></label>
+              </div>
+            </div>
+            <div class="form">
+              <label class="field full" data-trade-for hidden><span>Car you'd like to trade towards <em>(optional)</em></span>
+                <select name="vehicle" data-vehicle-select><option value="">Not decided yet</option></select>
+              </label>
+              <label class="field"><span>Price you have in mind <em>(optional)</em></span><input name="asking_price" placeholder="e.g. KSh 2,400,000"></label>
+              <label class="field"><span>Your location</span><input name="location" placeholder="City / town" required></label>
+              <label class="field"><span>Full name</span><input name="name" autocomplete="name" required></label>
+              <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" placeholder="+254 7xx xxx xxx" required></label>
+              <label class="field full"><span>Email <em>(optional)</em></span><input name="email" type="email" autocomplete="email"></label>
+            </div>
+            <label class="check"><input type="checkbox" name="consent" value="yes" required> I agree that Denver Car Dealership may contact me about this offer request. <a href="about.html#privacy">Privacy statement</a></label>
+          </fieldset>
+
+          <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+          <div class="wizard__nav">
+            <button class="btn btn--light btn--ghost" type="button" data-back hidden>Back</button>
+            <button class="btn btn--light" type="button" data-next>Continue</button>
+            <button class="btn btn--light" type="submit" data-submit hidden>Get my offer</button>
+          </div>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section section--mist">
+      <div class="container">
+        <div class="section-head section-head--center"><p class="eyebrow muted">Questions</p><h2 class="display display--lg">Selling FAQ</h2></div>
+        <div class="faq">
+          <details><summary>How is my offer worked out?</summary><p>We look at the make, model, year, mileage, condition and service history, plus current demand in the Kenyan market. Your photos help us give a firm figure faster.</p></details>
+          <details><summary>Can I sell a car that still has a loan?</summary><p>Yes. Tell us in the form and we'll work with your bank or lender to clear the balance as part of the sale.</p></details>
+          <details><summary>What documents will I need?</summary><p>The original logbook, your ID and KRA PIN. If there's a loan, a settlement letter from your lender.</p></details>
+          <details><summary>Do I have to buy a car from you?</summary><p>No. You can sell outright for cash, or use the value as a deposit on any car in our inventory.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

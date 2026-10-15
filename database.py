@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS vehicles (
     trim            TEXT DEFAULT '',
     year            INTEGER NOT NULL,
     price           INTEGER NOT NULL DEFAULT 0,
+    was_price       INTEGER NOT NULL DEFAULT 0,
     mileage         INTEGER NOT NULL DEFAULT 0,
     transmission    TEXT DEFAULT 'Automatic',
     fuel            TEXT DEFAULT 'Petrol',
@@ -44,6 +45,7 @@ CREATE TABLE IF NOT EXISTS inquiries (
     message     TEXT DEFAULT '',
     vehicle_id  INTEGER REFERENCES vehicles(id) ON DELETE SET NULL,
     details     TEXT DEFAULT '{}',
+    photos      TEXT DEFAULT '[]',
     status      TEXT NOT NULL DEFAULT 'new',
     created_at  TEXT NOT NULL
 );
@@ -58,7 +60,7 @@ CREATE TABLE IF NOT EXISTS admins (
 
 VEHICLE_STATUSES = ("available", "reserved", "sold", "draft")
 PUBLIC_STATUSES = ("available", "reserved", "sold")
-INQUIRY_KINDS = ("contact", "test_drive", "finance")
+INQUIRY_KINDS = ("contact", "test_drive", "finance", "sell", "service", "newsletter")
 INQUIRY_STATUSES = ("new", "contacted", "closed")
 BODY_TYPES = ("SUV", "Sedan", "Coupe", "Pickup", "Hatchback", "Wagon", "Convertible", "Van")
 FUELS = ("Petrol", "Diesel", "Hybrid", "Electric")
@@ -66,7 +68,7 @@ TRANSMISSIONS = ("Automatic", "Manual")
 CONDITIONS = ("New", "Used", "Foreign Used")
 
 VEHICLE_FIELDS = (
-    "make", "model", "trim", "year", "price", "mileage", "transmission", "fuel",
+    "make", "model", "trim", "year", "price", "was_price", "mileage", "transmission", "fuel",
     "engine_cc", "body_type", "condition", "exterior_color", "interior_color",
     "drivetrain", "description", "features", "images", "status", "featured",
 )
@@ -90,9 +92,21 @@ def close_db(_exc=None):
         db.close()
 
 
+# Columns added after the first release; older databases get them on start-up.
+MIGRATIONS = {
+    "vehicles": {"was_price": "INTEGER NOT NULL DEFAULT 0"},
+    "inquiries": {"photos": "TEXT DEFAULT '[]'"},
+}
+
+
 def init_db(seed_file=None):
     db = get_db()
     db.executescript(SCHEMA)
+    for table, columns in MIGRATIONS.items():
+        existing = {row["name"] for row in db.execute(f"PRAGMA table_info({table})")}
+        for column, ddl in columns.items():
+            if column not in existing:
+                db.execute(f"ALTER TABLE {table} ADD COLUMN {column} {ddl}")
     db.commit()
     empty = db.execute("SELECT COUNT(*) FROM vehicles").fetchone()[0] == 0
     if empty and seed_file and Path(seed_file).exists():
@@ -123,6 +137,7 @@ def vehicle_to_dict(row):
     v["features"] = json.loads(v["features"] or "[]")
     v["images"] = json.loads(v["images"] or "[]")
     v["featured"] = bool(v["featured"])
+    v["on_offer"] = bool(v.get("was_price")) and v["was_price"] > v["price"] and v["status"] != "sold"
     v["title"] = f"{v['year']} {v['make']} {v['model']}"
     return v
 
@@ -198,12 +213,12 @@ def import_vehicles(items, replace=False):
 
 # --------------------------------------------------------------- inquiries
 
-def create_inquiry(kind, name, email="", phone="", subject="", message="", vehicle_id=None, details=None):
+def create_inquiry(kind, name, email="", phone="", subject="", message="", vehicle_id=None, details=None, photos=None):
     db = get_db()
     cur = db.execute(
-        "INSERT INTO inquiries (kind, name, email, phone, subject, message, vehicle_id, details, created_at)"
-        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        (kind, name, email, phone, subject, message, vehicle_id, json.dumps(details or {}), now()),
+        "INSERT INTO inquiries (kind, name, email, phone, subject, message, vehicle_id, details, photos, created_at)"
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        (kind, name, email, phone, subject, message, vehicle_id, json.dumps(details or {}), json.dumps(photos or []), now()),
     )
     db.commit()
     return cur.lastrowid
@@ -212,16 +227,19 @@ def create_inquiry(kind, name, email="", phone="", subject="", message="", vehic
 def _inquiry_to_dict(row):
     d = dict(row)
     d["details"] = json.loads(d["details"] or "{}")
+    d["photos"] = json.loads(d.get("photos") or "[]")
     return d
 
 
-def list_inquiries(kind="", status="", limit=None):
+def list_inquiries(kind="", status="", limit=None, include_newsletter=False):
     sql = ("SELECT i.*, v.year || ' ' || v.make || ' ' || v.model AS vehicle_title"
            " FROM inquiries i LEFT JOIN vehicles v ON v.id = i.vehicle_id WHERE 1=1")
     args = []
     if kind:
         sql += " AND i.kind = ?"
         args.append(kind)
+    elif not include_newsletter:
+        sql += " AND i.kind != 'newsletter'"
     if status:
         sql += " AND i.status = ?"
         args.append(status)
@@ -241,6 +259,13 @@ def get_inquiry(inquiry_id):
     return _inquiry_to_dict(row) if row else None
 
 
+def is_subscribed(email):
+    row = get_db().execute(
+        "SELECT 1 FROM inquiries WHERE kind = 'newsletter' AND lower(email) = lower(?)", (email,)
+    ).fetchone()
+    return row is not None
+
+
 def set_inquiry_status(inquiry_id, status):
     db = get_db()
     db.execute("UPDATE inquiries SET status = ? WHERE id = ?", (status, inquiry_id))
@@ -256,8 +281,9 @@ def delete_inquiry(inquiry_id):
 def stats():
     db = get_db()
     by_status = dict(db.execute("SELECT status, COUNT(*) FROM vehicles GROUP BY status").fetchall())
-    new_inq = db.execute("SELECT COUNT(*) FROM inquiries WHERE status = 'new'").fetchone()[0]
-    total_inq = db.execute("SELECT COUNT(*) FROM inquiries").fetchone()[0]
+    new_inq = db.execute("SELECT COUNT(*) FROM inquiries WHERE status = 'new' AND kind != 'newsletter'").fetchone()[0]
+    total_inq = db.execute("SELECT COUNT(*) FROM inquiries WHERE kind != 'newsletter'").fetchone()[0]
+    subscribers = db.execute("SELECT COUNT(*) FROM inquiries WHERE kind = 'newsletter'").fetchone()[0]
     stock_value = db.execute(
         "SELECT COALESCE(SUM(price), 0) FROM vehicles WHERE status IN ('available', 'reserved')"
     ).fetchone()[0]
@@ -269,6 +295,7 @@ def stats():
         "new_inquiries": new_inq,
         "total_inquiries": total_inq,
         "stock_value": stock_value,
+        "subscribers": subscribers,
     }
 
 

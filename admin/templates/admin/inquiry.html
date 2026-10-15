@@ -1,7 +1,7 @@
 {% extends "admin/base.html" %}
 {% block title %}Inquiry from {{ inquiry.name }}{% endblock %}
 {% block eyebrow %}<a href="{{ url_for('admin.inquiries') }}">← Inquiries</a>{% endblock %}
-{% block heading %}{{ kinds[inquiry.kind] }} request · {{ inquiry.name }}{% endblock %}
+{% block heading %}{{ kinds[inquiry.kind] }}{{ '' if inquiry.kind == 'newsletter' else ' request' }} · {{ inquiry.name }}{% endblock %}
 {% block actions %}
 <form method="post" action="{{ url_for('admin.inquiry_status', inquiry_id=inquiry.id) }}" class="inline">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -43,4 +43,14 @@
     {% if inquiry.message %}<h3>Message</h3><p class="message">{{ inquiry.message }}</p>{% endif %}
   </section>
 </div>
+{% if inquiry.photos %}
+<section class="panel">
+  <h2>Customer photos ({{ inquiry.photos|length }})</h2>
+  <div class="photo-grid">
+    {% for img in inquiry.photos %}
+    <figure><a href="/{{ img }}" target="_blank" rel="noopener"><img src="/{{ img }}" alt="Photo {{ loop.index }} from {{ inquiry.name }}"></a></figure>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
 {% endblock %}
