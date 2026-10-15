@@ -18,7 +18,11 @@ from werkzeug.security import generate_password_hash
 import database as db
 
 ROOT = Path(__file__).resolve().parent
-PUBLIC_DIRS = {"css", "js", "images", "videos", "fonts", "assets", "data", "uploads"}
+PUBLIC_DIRS = {"css", "js", "images", "videos", "fonts", "assets", "data"}
+# Where the database, secret key and uploaded photos live. On a host, point
+# DCD_DATA_DIR at a persistent disk so they survive redeploys.
+DATA_DIR = Path(os.environ.get("DCD_DATA_DIR") or ROOT / "instance")
+LONG_CACHE = ("/images/", "/videos/", "/fonts/", "/uploads/")
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
@@ -33,11 +37,11 @@ def _secret_key(instance_path):
 
 
 def create_app(test_config=None):
-    app = Flask(__name__, static_folder=None, instance_path=str(ROOT / "instance"))
-    Path(app.instance_path).mkdir(exist_ok=True)
+    app = Flask(__name__, static_folder=None, instance_path=str(DATA_DIR))
+    Path(app.instance_path).mkdir(parents=True, exist_ok=True)
     app.config.update(
-        DATABASE=str(Path(app.instance_path) / "dealership.db"),
-        UPLOAD_FOLDER=str(ROOT / "uploads"),
+        DATABASE=str(DATA_DIR / "dealership.db"),
+        UPLOAD_FOLDER=str(DATA_DIR / "uploads" if os.environ.get("DCD_DATA_DIR") else ROOT / "uploads"),
         SEED_FILE=str(ROOT / "data" / "inventory.json"),
         MAX_CONTENT_LENGTH=40 * 1024 * 1024,
         SESSION_COOKIE_HTTPONLY=True,
@@ -47,7 +51,7 @@ def create_app(test_config=None):
     if test_config:
         app.config.update(test_config)
     app.secret_key = app.config.get("SECRET_KEY") or _secret_key(app.instance_path)
-    Path(app.config["UPLOAD_FOLDER"]).mkdir(exist_ok=True)
+    Path(app.config["UPLOAD_FOLDER"]).mkdir(parents=True, exist_ok=True)
 
     app.teardown_appcontext(db.close_db)
     with app.app_context():
@@ -147,6 +151,10 @@ def register_site(app):
     @app.get("/<path:path>")
     def site(path):
         top = path.split("/", 1)[0]
+        if top == "uploads" and "/" in path:
+            return send_from_directory(app.config["UPLOAD_FOLDER"], path.split("/", 1)[1])
+        if path == "robots.txt":
+            return send_from_directory(ROOT, path)
         if "/" in path and top in PUBLIC_DIRS:
             return send_from_directory(ROOT, path)
         # Pretty URLs: /vehicles -> vehicles.html
@@ -154,6 +162,17 @@ def register_site(app):
         if "/" not in page and re.fullmatch(r"[a-z0-9-]+", page) and (ROOT / f"{page}.html").exists():
             return send_from_directory(ROOT, f"{page}.html")
         abort(404)
+
+    @app.after_request
+    def headers(res):
+        res.headers.setdefault("X-Content-Type-Options", "nosniff")
+        res.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+        res.headers.setdefault("X-Frame-Options", "SAMEORIGIN")
+        if request.path.startswith(LONG_CACHE) and res.status_code == 200:
+            res.headers["Cache-Control"] = "public, max-age=604800"
+        elif request.path.startswith("/admin"):
+            res.headers["Cache-Control"] = "no-store"
+        return res
 
     @app.errorhandler(404)
     def not_found(_e):
@@ -183,4 +202,8 @@ def register_cli(app):
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(debug=os.environ.get("FLASK_DEBUG") == "1", port=int(os.environ.get("PORT", 5000)))
+    app.run(
+        host=os.environ.get("HOST", "127.0.0.1"),
+        port=int(os.environ.get("PORT", 5000)),
+        debug=os.environ.get("FLASK_DEBUG") == "1",
+    )

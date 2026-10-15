@@ -1,0 +1,23 @@
+# One-click setup for Render (https://render.com): New > Blueprint > pick this repo.
+# The disk keeps the database and uploaded photos safe across deploys.
+# Render disks need a paid instance (Starter); see README for a free option.
+services:
+  - type: web
+    name: denver-car-dealership
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 1 --threads 4 --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: DCD_DATA_DIR
+        value: /var/data
+      - key: DCD_SECRET_KEY
+        generateValue: true
+      - key: DCD_SECURE_COOKIES
+        value: "1"
+    disk:
+      name: dealership-data
+      mountPath: /var/data
+      sizeGB: 1
