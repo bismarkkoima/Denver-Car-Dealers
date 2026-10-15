@@ -1,7 +1,7 @@
 {% extends "admin/base.html" %}
 {% block title %}Inquiries{% endblock %}
 {% block heading %}Inquiries{% endblock %}
-{% block actions %}<a class="btn ghost" href="{{ url_for('admin.inquiries_csv') }}">Export CSV</a>{% endblock %}
+{% block actions %}<a class="btn ghost" href="{{ url_for('admin.inquiries_csv', kind=kind) if kind else url_for('admin.inquiries_csv') }}">Export {{ kinds[kind] if kind else 'all' }} (CSV)</a>{% endblock %}
 {% block content %}
 <nav class="tabs">
   <a href="{{ url_for('admin.inquiries', status=status) }}" class="{{ 'active' if not kind }}">All</a>

@@ -83,6 +83,9 @@ a.stat.accent:hover { background: #222; }
 .kind-contact { color: var(--ink); }
 .kind-test_drive { color: var(--info); }
 .kind-finance { color: var(--good); }
+.kind-sell { color: #8a4b00; }
+.kind-service { color: #6b3fa0; }
+.kind-newsletter { color: var(--muted); }
 
 /* ------------------------------------------------------------- buttons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--ink); color: #fff; border: 1px solid var(--ink); padding: 12px 22px; font: 500 12px/1 var(--body); letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background .2s, color .2s; }

@@ -3,22 +3,19 @@ import csv
 import io
 import secrets
 import time
-import uuid
 from collections import defaultdict
 from functools import wraps
-from pathlib import Path
 
-from flask import (Blueprint, Response, abort, current_app, flash, redirect,
+from flask import (Blueprint, Response, abort, flash, redirect,
                    render_template, request, session, url_for)
-from PIL import Image, UnidentifiedImageError
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import database as db
+import notify
+from media import remove_upload, save_upload
 
 bp = Blueprint("admin", __name__, url_prefix="/admin", template_folder="templates")
 
-ALLOWED_IMAGE_FORMATS = {"JPEG": ".jpg", "PNG": ".png", "WEBP": ".webp"}
-MAX_IMAGE_SIDE = 2000
 _failed_logins = defaultdict(list)
 
 
@@ -63,33 +60,6 @@ def _to_int(value, default=0):
         return default
 
 
-def save_upload(file_storage):
-    """Validate an uploaded photo, shrink it if huge, and store it under /uploads."""
-    try:
-        img = Image.open(file_storage.stream)
-        img.verify()
-        file_storage.stream.seek(0)
-        img = Image.open(file_storage.stream)
-    except (UnidentifiedImageError, OSError):
-        return None
-    ext = ALLOWED_IMAGE_FORMATS.get(img.format)
-    if not ext:
-        return None
-    if img.mode not in ("RGB", "RGBA") or (ext == ".jpg" and img.mode != "RGB"):
-        img = img.convert("RGBA" if ext != ".jpg" and "A" in img.getbands() else "RGB")
-    img.thumbnail((MAX_IMAGE_SIDE, MAX_IMAGE_SIDE))
-    name = f"{uuid.uuid4().hex}{ext}"
-    img.save(Path(current_app.config["UPLOAD_FOLDER"]) / name, quality=85, optimize=True)
-    return f"uploads/{name}"
-
-
-def remove_upload(path):
-    """Delete an uploaded file. Bundled site images are never touched."""
-    if path.startswith("uploads/"):
-        target = Path(current_app.config["UPLOAD_FOLDER"]) / Path(path).name
-        target.unlink(missing_ok=True)
-
-
 def back(default):
     """Return to the admin page the form came from (never to another site)."""
     target = request.form.get("next", "")
@@ -106,6 +76,7 @@ def vehicle_from_form(form):
         "trim": form.get("trim", "").strip(),
         "year": _to_int(form.get("year")),
         "price": _to_int(form.get("price")),
+        "was_price": _to_int(form.get("was_price")),
         "mileage": _to_int(form.get("mileage")),
         "engine_cc": _to_int(form.get("engine_cc")),
         "transmission": form.get("transmission", "Automatic"),
@@ -128,6 +99,8 @@ def vehicle_from_form(form):
         errors.append("Enter a valid year.")
     if data["price"] < 0:
         errors.append("Price can't be negative.")
+    if data["was_price"] and data["was_price"] <= data["price"]:
+        errors.append("The 'was' price must be higher than the current price (or leave it empty).")
     if data["status"] not in db.VEHICLE_STATUSES:
         errors.append("Unknown status.")
     return data, errors
@@ -205,7 +178,23 @@ def account():
             db.set_admin_password(user["username"], generate_password_hash(new))
             flash("Password updated.")
             return redirect(url_for("admin.account"))
-    return render_template("admin/account.html", error=error)
+    return render_template("admin/account.html", error=error, email=notify.settings(),
+                           email_ready=notify.is_configured())
+
+
+@bp.post("/account/test-email")
+@login_required
+def test_email():
+    if not notify.is_configured():
+        flash("Email alerts aren't set up yet. Add the email settings described below, then restart the site.")
+    else:
+        try:
+            notify.send("Test alert from your website",
+                        "Email alerts are working. You'll get a message like this for every new inquiry.")
+            flash(f"Test email sent to {', '.join(notify.settings()['to'])}. Check your inbox (and spam folder).")
+        except Exception as exc:  # noqa: BLE001 - show the admin what went wrong
+            flash(f"Couldn't send the test email: {exc}")
+    return redirect(url_for("admin.account"))
 
 
 # --------------------------------------------------------------- dashboard
@@ -320,7 +309,8 @@ def vehicle_delete(vehicle_id):
 
 # --------------------------------------------------------------- inquiries
 
-KIND_LABELS = {"contact": "Contact", "test_drive": "Test drive", "finance": "Finance"}
+KIND_LABELS = {"contact": "Contact", "test_drive": "Test drive", "finance": "Finance",
+               "sell": "Sell / trade-in", "service": "Service", "newsletter": "Subscribers"}
 
 
 @bp.get("/inquiries")
@@ -359,6 +349,9 @@ def inquiry_status(inquiry_id):
 @bp.post("/inquiries/<int:inquiry_id>/delete")
 @login_required
 def inquiry_delete(inquiry_id):
+    item = db.get_inquiry(inquiry_id)
+    for p in (item or {}).get("photos", []):
+        remove_upload(p)
     db.delete_inquiry(inquiry_id)
     flash("Inquiry deleted.")
     return redirect(url_for("admin.inquiries"))
@@ -370,11 +363,12 @@ def inquiries_csv():
     out = io.StringIO()
     writer = csv.writer(out)
     writer.writerow(["id", "date", "type", "status", "name", "email", "phone", "vehicle", "subject", "message", "details"])
-    for i in db.list_inquiries():
+    kind = request.args.get("kind", "")
+    for i in db.list_inquiries(kind=kind if kind in db.INQUIRY_KINDS else "", include_newsletter=True):
         details = "; ".join(f"{k}: {v}" for k, v in i["details"].items())
         row = [i["id"], i["created_at"], KIND_LABELS.get(i["kind"], i["kind"]), i["status"], i["name"],
                i["email"], i["phone"], i["vehicle_title"] or "", i["subject"], i["message"], details]
         # Stop spreadsheet apps from treating customer text as formulas.
         writer.writerow(["'" + c if isinstance(c, str) and c[:1] in "=+-@" else c for c in row])
     return Response(out.getvalue(), mimetype="text/csv",
-                    headers={"Content-Disposition": "attachment; filename=inquiries.csv"})
+                    headers={"Content-Disposition": f"attachment; filename={kind or 'inquiries'}.csv"})
