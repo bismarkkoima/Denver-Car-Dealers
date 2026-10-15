@@ -46,8 +46,14 @@ class AppTestCase(unittest.TestCase):
             with self.client.get(path) as res:
                 self.assertEqual(res.status_code, 200, path)
 
+    def test_fonts_and_robots_served(self):
+        for path in ["/fonts/fonts.css", "/fonts/inter-latin.woff2", "/fonts/jost-latin.woff2", "/robots.txt"]:
+            with self.client.get(path) as res:
+                self.assertEqual(res.status_code, 200, path)
+
     def test_private_files_not_served(self):
-        for path in ["/app.py", "/database.py", "/admin/routes.py", "/instance/dealership.db", "/.git/config"]:
+        for path in ["/app.py", "/database.py", "/admin/routes.py", "/instance/dealership.db", "/.git/config",
+                     "/requirements.txt", "/render.yaml", "/uploads/../app.py"]:
             with self.client.get(path) as res:
                 self.assertEqual(res.status_code, 404, path)
 
@@ -113,6 +119,9 @@ class AppTestCase(unittest.TestCase):
         self.assertEqual(len(car["images"]), 1)
         saved = Image.open(self.tmp / car["images"][0])
         self.assertLessEqual(max(saved.size), 2000)
+        with self.client.get("/" + car["images"][0]) as res:
+            self.assertEqual(res.status_code, 200)
+            self.assertIn("max-age", res.headers["Cache-Control"])
 
     def test_csv_export_neutralises_formulas(self):
         self.client.post("/api/inquiries", json={"kind": "contact", "name": "=HYPERLINK(1)", "email": "a@b.co"})
