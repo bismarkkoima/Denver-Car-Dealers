@@ -24,7 +24,7 @@
       <td>{% if v.images %}<img class="thumb" src="/{{ v.images[0] }}" alt="">{% else %}<span class="thumb"></span>{% endif %}</td>
       <td>
         <a class="strong" href="{{ url_for('admin.vehicle_edit', vehicle_id=v.id) }}">{{ v.title }}</a>
-        <div class="muted">{{ v.trim }} · {{ v.body_type }} · {{ v.condition }}{% if v.featured %} · ★ Featured{% endif %}</div>
+        <div class="muted">{{ [v.trim, v.body_type, v.condition, "★ Featured" if v.featured else ""]|select|join(" · ") }}</div>
       </td>
       <td>{{ money(v.price) }}</td>
       <td>{{ "{:,}".format(v.mileage) }} km</td>
@@ -39,14 +39,14 @@
           </select>
         </form>
       </td>
-      <td class="row-actions">
+      <td><div class="row-actions">
         {% if v.status != 'draft' %}<a href="/vehicle?id={{ v.slug }}" target="_blank" rel="noopener">View</a>{% endif %}
         <a href="{{ url_for('admin.vehicle_edit', vehicle_id=v.id) }}">Edit</a>
         <form method="post" action="{{ url_for('admin.vehicle_delete', vehicle_id=v.id) }}" onsubmit="return confirm('Delete this vehicle? This cannot be undone.')">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <button class="link-btn danger" type="submit">Delete</button>
         </form>
-      </td>
+      </div></td>
     </tr>
   {% endfor %}
   </tbody>

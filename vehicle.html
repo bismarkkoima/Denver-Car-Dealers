@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vehicle details — Denver Car Dealership</title>
+  <meta name="description" content="Vehicle details, photos, specifications and pricing at Denver Car Dealership, Eldoret.">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+  <script defer src="js/vehicle.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="section section--tight">
+      <div class="container" data-vehicle>
+        <div class="vd">
+          <div class="skeleton" style="aspect-ratio: 16 / 10"></div>
+          <div class="skeleton" style="height: 420px"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" data-enquire hidden>
+      <div class="container split" style="align-items: start">
+        <div>
+          <p class="eyebrow muted">Interested?</p>
+          <h2 class="display display--lg" style="margin-top: 14px">Ask about this car</h2>
+          <p class="lead muted">Questions about history, inspection or availability? Send a message and our sales team will get back to you the same day.</p>
+          <dl class="info-strip" style="grid-template-columns: repeat(2, 1fr)">
+            <div><dt>Call</dt><dd><a data-site="phone"></a></dd></div>
+            <div><dt>Email</dt><dd><a data-site="email"></a></dd></div>
+          </dl>
+        </div>
+        <form class="form" data-enquiry-form novalidate>
+          <label class="field"><span>Full name</span><input name="name" autocomplete="name" required></label>
+          <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" required></label>
+          <label class="field full"><span>Email <em>(optional)</em></span><input name="email" type="email" autocomplete="email"></label>
+          <label class="field full"><span>Message</span><textarea name="message" rows="5" required></textarea></label>
+          <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+          <div class="full"><button class="btn btn--light" type="submit">Send message</button></div>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" data-similar hidden>
+      <div class="container">
+        <div class="section-head">
+          <div><p class="eyebrow muted">You may also like</p><h2 class="display display--lg">Similar vehicles</h2></div>
+          <a class="link-arrow" href="vehicles.html">All inventory</a>
+        </div>
+        <div class="car-grid" data-similar-grid></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

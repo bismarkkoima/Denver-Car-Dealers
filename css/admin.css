@@ -134,7 +134,7 @@ label.check input { width: 18px; height: 18px; }
 .table .strong { font-weight: 600; text-decoration: none; }
 .table .strong:hover { text-decoration: underline; }
 .nowrap { white-space: nowrap; }
-.row-actions { display: flex; gap: 14px; align-items: center; justify-content: flex-end; font-size: 13px; padding-top: 24px !important; }
+.row-actions { display: flex; gap: 14px; align-items: center; justify-content: flex-end; font-size: 13px; }
 .row-actions a { text-decoration: none; }
 .row-actions a:hover { text-decoration: underline; }
 

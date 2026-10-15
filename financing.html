@@ -1,81 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8">
-  <title>Denver Car Financing</title>
-  <link rel="stylesheet" href="css/financing.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Car Financing — Denver Car Dealership</title>
+  <meta name="description" content="Estimate your monthly car payment and apply for vehicle financing at Denver Car Dealership, Eldoret.">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+  <script defer src="js/financing.js"></script>
 </head>
+<body class="has-hero">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header"></header>
 
-<body>
-
-  <video autoplay muted loop id="background-video">
-    <source src="videos/testdrivepage.mp4" type="video/mp4" />
-        Your browser does not support HTML5 video.
-  </video>
-
->
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-content">
-      <p>Sidebar Menu</p>
-    </div>
-  </div>
-  <div class="header-bar">
-    <img src="images/logoforpage.png" alt="Header Bar">
-
-    <div class="nav">
-      <div class="menu-icon" id="menuToggle">
-        <span></span>
-        <span></span>
+  <main id="main">
+    <section class="hero hero--short">
+      <div class="hero__media">
+        <video autoplay muted loop playsinline preload="auto" poster="images/posters/coupe-detail.jpg">
+          <source src="videos/coupe-detail.mp4" type="video/mp4">
+        </video>
       </div>
-      <div class="nav-item">VEHICLES</div>
-      <div class="nav-item">SHOP</div>
-    </div>
-  </div>
-  <nav class="sub-navbar">
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Vehicles</a></li>
-      <li><a href="#">Shop</a></li>
-      <li><a href="contact.html">Contact</a></li>   
-      <li><a href="financing.html">Financing</a></li>      
-      <li><a href="testdrive.html">Test Drive</a></li>                                                                                                                                                                                                                                                                                                      
-    </ul>
-  </nav>
-  <section class="featured-products">
-    <h2>Financial Deals</h2>
+      <div class="hero__content">
+        <p class="eyebrow">Financing</p>
+        <h1 class="display display--xl">Drive it home<br>sooner</h1>
+        <p class="lead">Flexible car loans and payment plans arranged in-house with trusted banks and asset-finance partners.</p>
+        <div class="btn-row">
+          <a class="btn btn--light" href="#calculator">Calculate payments</a>
+          <a class="btn btn--light btn--ghost" href="#apply">Apply for credit</a>
+        </div>
+      </div>
+    </section>
 
-    <div class="product">
-      <img src="images/financingpage1.jpg" alt="Credit application">
-      <h3>Apply for credit</h3>
-      <p>Let`s start the process together.</p>
-    </div>
+    <!-- Offers -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div><p class="eyebrow muted">Financial deals</p><h2 class="display display--lg">Ways to buy</h2></div>
+        </div>
+        <div class="cards-4">
+          <a class="offer reveal" href="#apply">
+            <div class="offer__media"><img src="images/cars/isuzu-dmax-1.jpg" alt="Isuzu D-Max" loading="lazy"></div>
+            <h3 class="display display--sm">Apply for credit</h3>
+            <p>Let's start the process together. Get a decision in as little as 48 hours.</p>
+          </a>
+          <a class="offer reveal reveal-delay-1" href="vehicles.html">
+            <div class="offer__media"><img src="images/cars/alfa-romeo-giulietta-1.jpg" alt="Alfa Romeo Giulietta" loading="lazy"></div>
+            <h3 class="display display--sm">Special offers</h3>
+            <p>Seasonal deals and reduced deposits on selected vehicles in stock.</p>
+          </a>
+          <a class="offer reveal reveal-delay-2" href="contact.html?subject=Vehicle%20protection">
+            <div class="offer__media"><img src="images/cars/mercedes-amg-gt-1.jpg" alt="Mercedes-AMG GT 4-door coupe" loading="lazy"></div>
+            <h3 class="display display--sm">Vehicle protection</h3>
+            <p>Comprehensive insurance, tracking and extended warranty options, arranged for you.</p>
+          </a>
+          <a class="offer reveal reveal-delay-3" href="#calculator">
+            <div class="offer__media"><img src="images/cars/bmw-x5-1.jpg" alt="BMW X5" loading="lazy"></div>
+            <h3 class="display display--sm">Payment plans</h3>
+            <p>Flexible and convenient terms from 12 to 72 months to suit your budget.</p>
+          </a>
+        </div>
+      </div>
+    </section>
 
-    <div class="product">
-      <img src="images/financingpage2.jpg" alt="Special Offers">
-      <h3>Special Offers</h3>
-      <p>Amazing deals in your local area.</p>
-    </div>
+    <!-- Calculator -->
+    <section class="section section--mist" id="calculator">
+      <div class="container">
+        <div class="section-head">
+          <div><p class="eyebrow muted">Payment estimator</p><h2 class="display display--lg">Plan your budget</h2></div>
+        </div>
+        <form class="calc" data-calc onsubmit="return false">
+          <div class="calc__inputs">
+            <label class="field"><span>Vehicle</span>
+              <select name="vehicle" data-calc-vehicle><option value="">Enter a custom price</option></select>
+            </label>
+            <div class="calc__row">
+              <header><span class="eyebrow">Vehicle price</span><output data-out="price"></output></header>
+              <input type="range" name="price" min="500000" max="30000000" step="50000" value="5000000" aria-label="Vehicle price">
+            </div>
+            <div class="calc__row">
+              <header><span class="eyebrow">Deposit</span><output data-out="deposit"></output></header>
+              <input type="range" name="deposit" min="10" max="80" step="5" value="30" aria-label="Deposit percentage">
+            </div>
+            <div class="calc__row">
+              <header><span class="eyebrow">Term</span><output data-out="months"></output></header>
+              <input type="range" name="months" min="12" max="72" step="6" value="48" aria-label="Loan term in months">
+            </div>
+            <div class="calc__row">
+              <header><span class="eyebrow">Interest rate (per year)</span><output data-out="rate"></output></header>
+              <input type="range" name="rate" min="8" max="24" step="0.5" value="14" aria-label="Interest rate">
+            </div>
+          </div>
+          <div class="calc__result">
+            <p class="eyebrow" style="color: var(--muted-dark)">Estimated monthly payment</p>
+            <p class="calc__monthly" data-out="monthly" aria-live="polite"></p>
+            <dl class="calc__breakdown">
+              <div><dt>Deposit</dt><dd data-out="depositAmt"></dd></div>
+              <div><dt>Amount financed</dt><dd data-out="loan"></dd></div>
+              <div><dt>Total interest</dt><dd data-out="interest"></dd></div>
+              <div><dt>Total cost</dt><dd data-out="total"></dd></div>
+            </dl>
+            <a class="btn btn--light" href="#apply" data-calc-apply>Apply with these numbers</a>
+            <p class="calc__note">Illustrative only. Your actual rate depends on the lender and your credit profile. Excludes insurance, tracking and fees.</p>
+          </div>
+        </form>
+      </div>
+    </section>
 
-    <div class="product">
-      <img src="images/financingpage6.jpg" alt="Special Offers">
-      <h3>Special Offers</h3>
-      <p>Amazing deals in your local area.</p>
-    </div>
+    <!-- Steps -->
+    <section class="section dark">
+      <div class="container">
+        <div class="section-head"><div><p class="eyebrow muted">How it works</p><h2 class="display display--lg">Three simple steps</h2></div></div>
+        <ol class="steps">
+          <li class="reveal"><h3 class="display display--sm">Choose your car</h3><p>Browse our inventory or tell us what you want and we'll source it.</p></li>
+          <li class="reveal reveal-delay-1"><h3 class="display display--sm">Apply online</h3><p>Fill in the short form below. We'll match you with the best lender for your situation.</p></li>
+          <li class="reveal reveal-delay-2"><h3 class="display display--sm">Drive away</h3><p>Sign, pay your deposit and collect your keys. We handle the paperwork and logbook transfer.</p></li>
+        </ol>
+      </div>
+    </section>
 
-    <div class="product">
-      <img src="images/financingpage4.jpg" alt="Vehicle Protection Plans">
-      <h3>Vehicle Protection</h3>
-      <p>Amazing deals in your local area.</p>
-    </div>
+    <!-- Application -->
+    <section class="section" id="apply">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow muted">Credit application</p>
+            <h2 class="display display--lg">Apply for financing</h2>
+            <p class="lead muted" style="margin-top: 16px">No commitment. A finance specialist will call you to discuss options. We never share your details without your consent.</p>
+          </div>
+        </div>
+        <form class="form form-panel" data-finance-form novalidate>
+          <label class="field"><span>Full name</span><input name="name" autocomplete="name" required></label>
+          <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" placeholder="+254 7xx xxx xxx" required></label>
+          <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
+          <label class="field"><span>Employment</span>
+            <select name="employment" required>
+              <option value="">Select…</option>
+              <option>Employed (permanent)</option>
+              <option>Employed (contract)</option>
+              <option>Self-employed / business owner</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="field"><span>Net monthly income</span>
+            <select name="monthly_income" required>
+              <option value="">Select…</option>
+              <option>Below KSh 100,000</option>
+              <option>KSh 100,000 – 250,000</option>
+              <option>KSh 250,000 – 500,000</option>
+              <option>Above KSh 500,000</option>
+            </select>
+          </label>
+          <label class="field"><span>Vehicle of interest</span>
+            <select name="vehicle" data-apply-vehicle><option value="">Not decided yet</option></select>
+          </label>
+          <label class="field"><span>Deposit you can pay</span><input name="deposit" placeholder="e.g. KSh 1,500,000"></label>
+          <label class="field"><span>Preferred term</span>
+            <select name="term">
+              <option value="">Select…</option>
+              <option>12 months</option><option>24 months</option><option>36 months</option>
+              <option selected>48 months</option><option>60 months</option><option>72 months</option>
+            </select>
+          </label>
+          <label class="field full"><span>Anything else? <em>(optional)</em></span><textarea name="message" rows="4" placeholder="Trade-in, preferred bank, timing…"></textarea></label>
+          <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+          <label class="check full"><input type="checkbox" name="consent" value="yes" required> I agree that Denver Car Dealership may contact me about this application and share my details with lending partners to obtain a quote.</label>
+          <div class="full"><button class="btn" type="submit">Submit application</button></div>
+          <div class="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
 
-    <div class="product">
-      <img src="images/financing page 5.jpg" alt="Make payment plans">
-      <h3>Make Payment Plans</h3>
-      <p>Flexible and convenient option</p>
-    </div>
-  </section>
-  <script src="script.js"></script>
+    <!-- FAQ -->
+    <section class="section section--mist">
+      <div class="container">
+        <div class="section-head section-head--center"><p class="eyebrow muted">Questions</p><h2 class="display display--lg">Financing FAQ</h2></div>
+        <div class="faq">
+          <details><summary>What do I need to apply?</summary><p>Usually a copy of your national ID or passport, KRA PIN, 6 months of bank statements and payslips (or business records if self-employed). We'll confirm exactly what your lender needs.</p></details>
+          <details><summary>How much deposit do I need?</summary><p>Most lenders ask for 20–30% of the vehicle price. A larger deposit lowers your monthly payment and total interest.</p></details>
+          <details><summary>How long does approval take?</summary><p>Many applications get a decision within 48 hours once documents are complete.</p></details>
+          <details><summary>Can I trade in my current car?</summary><p>Yes. We value your car on the spot and the agreed amount can go towards your deposit.</p></details>
+          <details><summary>Can I finance a foreign-used vehicle?</summary><p>Yes. Our partners finance both new and foreign-used vehicles, subject to age and valuation limits.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
 
+  <footer id="site-footer"></footer>
 </body>
 </html>
