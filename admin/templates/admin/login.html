@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+{% block title %}Sign in{% endblock %}
+{% block body_class %}auth{% endblock %}
+{% block layout %}
+  <video class="auth-video" autoplay muted loop playsinline poster="/images/posters/coupe-detail.jpg">
+    <source src="/videos/coupe-detail.mp4" type="video/mp4">
+  </video>
+  <main class="auth-card">
+    <p class="eyebrow">Denver Car Dealership</p>
+    <h1>{% block auth_heading %}Admin sign in{% endblock %}</h1>
+    {% if error %}<div class="flash error">{{ error }}</div>{% endif %}
+    {% with messages = get_flashed_messages() %}{% for m in messages %}<div class="flash">{{ m }}</div>{% endfor %}{% endwith %}
+    {% block auth_form %}
+    <form method="post" class="stack">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Username<input name="username" autocomplete="username" required autofocus></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="btn" type="submit">Sign in</button>
+    </form>
+    {% endblock %}
+    <a class="back-link" href="/">← Back to website</a>
+  </main>
+{% endblock %}

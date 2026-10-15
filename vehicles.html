@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vehicles for Sale — Denver Car Dealership</title>
+  <meta name="description" content="Browse new and foreign-used SUVs, sedans, pickups and more for sale at Denver Car Dealership, Eldoret.">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+  <script defer src="js/inventory.js"></script>
+</head>
+<body class="has-hero">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header"></header>
+
+  <main id="main">
+    <section class="hero hero--short">
+      <div class="hero__media">
+        <video autoplay muted loop playsinline preload="auto" poster="images/posters/offroad-rav4.jpg">
+          <source src="videos/offroad-rav4.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero__content">
+        <p class="eyebrow">Inventory</p>
+        <h1 class="display display--xl">Vehicles</h1>
+        <p class="lead" style="margin-bottom: 0">Every car is inspected, priced transparently and ready for a test drive.</p>
+      </div>
+    </section>
+
+    <form class="filters" data-filters role="search" aria-label="Filter vehicles">
+      <div class="container filters__inner">
+        <label class="filters__search">Search
+          <input type="search" name="q" placeholder="Make, model or year">
+        </label>
+        <label>Make <select name="make"><option value="">All makes</option></select></label>
+        <label>Body type <select name="body"><option value="">All types</option></select></label>
+        <label>Fuel <select name="fuel"><option value="">Any fuel</option></select></label>
+        <label>Max price
+          <select name="max">
+            <option value="">Any price</option>
+            <option value="3000000">Up to KSh 3M</option>
+            <option value="5000000">Up to KSh 5M</option>
+            <option value="10000000">Up to KSh 10M</option>
+            <option value="15000000">Up to KSh 15M</option>
+            <option value="25000000">Up to KSh 25M</option>
+          </select>
+        </label>
+        <button class="filters__reset" type="reset">Clear</button>
+      </div>
+    </form>
+
+    <section class="section section--tight">
+      <div class="container">
+        <div class="results-bar">
+          <p class="eyebrow muted" data-count aria-live="polite">Loading vehicles…</p>
+          <label class="sr-only" for="sort">Sort by</label>
+          <select id="sort" name="sort" data-sort>
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+            <option value="year-desc">Year: newest first</option>
+            <option value="mileage-asc">Mileage: lowest first</option>
+          </select>
+        </div>
+        <div class="car-grid" data-grid>
+          <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+        </div>
+        <div class="empty-state" data-empty hidden>
+          <h2 class="display display--md">No matches</h2>
+          <p>Nothing fits those filters right now. Tell us what you're looking for and we'll source it.</p>
+          <div class="btn-row" style="justify-content: center">
+            <button class="btn btn--ghost" type="button" data-clear>Clear filters</button>
+            <a class="btn" href="contact.html?subject=Vehicle%20sourcing">Request a vehicle</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark">
+      <div class="container split">
+        <div>
+          <p class="eyebrow muted">Can't find it?</p>
+          <h2 class="display display--lg" style="margin-top: 14px">We'll source it</h2>
+          <p class="lead muted">Tell us the make, model and budget. We import and source vehicles to order, with full inspection and paperwork handled.</p>
+          <div class="btn-row">
+            <a class="btn btn--light" href="contact.html?subject=Vehicle%20sourcing">Request a vehicle</a>
+            <a class="btn btn--light btn--ghost" href="financing.html">Explore financing</a>
+          </div>
+        </div>
+        <div class="split__media"><img src="images/cars/mercedes-gle63-coupe-2.jpg" alt="Mercedes-AMG GLE coupe on an open road" loading="lazy"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

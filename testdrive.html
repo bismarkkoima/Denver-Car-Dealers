@@ -1,125 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Request a Test Drive</title>
-  <link rel="stylesheet" href="css/testdrive.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <script defer src="js/script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a Test Drive — Denver Car Dealership</title>
+  <meta name="description" content="Request a test drive at Denver Car Dealership, Eldoret, at our showroom or at your home or office.">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+  <script defer src="js/testdrive.js"></script>
 </head>
-<body>
-  
-  <video autoplay muted loop id="background-video">
-    <source src="videos/testdrivepage.mp4" type="video/mp4" />
-        Your browser does not support HTML5 video.
-  </video>
+<body class="has-hero">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header"></header>
 
-  <header class="header">
-    <h1>REQUEST A TEST DRIVE</h1>
-    <p>Experience the thrill of driving new DCD arrivals.</p>
-  </header>
+  <main id="main">
+    <section class="hero hero--short">
+      <div class="hero__media">
+        <video autoplay muted loop playsinline preload="auto" poster="images/posters/showroom-lx.jpg">
+          <source src="videos/showroom-lx.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero__content">
+        <p class="eyebrow">Test drive</p>
+        <h1 class="display display--xl">Request a<br>test drive</h1>
+        <p class="lead" style="margin-bottom: 0">Experience the thrill of driving the newest DCD arrivals, at our showroom or wherever suits you.</p>
+      </div>
+    </section>
 
+    <section class="section dark">
+      <div class="container">
+        <form class="form-wrap" data-testdrive-form novalidate>
+          <div class="form-steps">
+            <fieldset class="form-step">
+              <legend>1. Your vehicle</legend>
+              <figure class="preview" data-preview>
+                <span data-site="car" aria-hidden="true"></span>
+                <figcaption data-preview-caption hidden></figcaption>
+              </figure>
+              <label class="field"><span>Choose a vehicle</span>
+                <select name="vehicle" data-vehicle-select>
+                  <option value="">Not sure yet / something else</option>
+                </select>
+              </label>
+              <div class="form-step" data-other style="gap: 18px">
+                <label class="field"><span>Preferred brand</span>
+                  <select name="preferred_brand">
+                    <option value="">Any brand</option>
+                    <option>Alfa Romeo</option><option>BMW</option><option>Cadillac</option><option>Chevrolet</option>
+                    <option>Ford</option><option>Honda</option><option>Hyundai</option><option>Isuzu</option>
+                    <option>Jeep</option><option>Land Rover</option><option>Lexus</option><option>Mazda</option>
+                    <option>Mercedes-Benz</option><option>Mitsubishi</option><option>Nissan</option><option>Subaru</option>
+                    <option>Toyota</option><option>Volkswagen</option><option>Volvo</option><option>Other</option>
+                  </select>
+                </label>
+                <label class="field"><span>Body type</span>
+                  <select name="preferred_body_type">
+                    <option value="">Any type</option>
+                    <option>SUV</option><option>Sedan</option><option>Pickup</option><option>Coupe</option>
+                    <option>Hatchback</option><option>Convertible</option><option>Wagon</option><option>Van</option>
+                    <option>Hybrid</option><option>Electric</option>
+                  </select>
+                </label>
+              </div>
+              <p class="muted" style="font-size: .85rem">Your selected dealer will give you their best selling price on this vehicle. Images may not show the exact vehicle sold by DCD.</p>
+            </fieldset>
 
-  <main class="form-container">
-  
-    <div class="column">
-      <h2>1. Your Vehicle</h2>
-      <div class="vehicle-image"></div>
-      <label for="model-year">Choose your model year</label>
-      <select id="model-year" required>
-        <option value="">Choose your model year</option>
-        <option>2025</option>
-        <option>2024</option>
-        <option>2023</option>
-        <option>2022</option>
-        <option>2021</option>
-        <option>2020</option>
-        <option>2019</option>
-        <option>2018</option>
-        <option>2017</option>
-        <option>2016</option>
-        <option>2015</option> 
-        <option>2014</option>
-        <option>2013</option>
-        <option>2012</option>
-        <option>2011</option>
-        <option>2010</option>
-      </select>
+            <fieldset class="form-step">
+              <legend>2. Your information</legend>
+              <label class="field"><span>First name</span><input name="first_name" autocomplete="given-name" required></label>
+              <label class="field"><span>Last name</span><input name="last_name" autocomplete="family-name" required></label>
+              <label class="field"><span>Phone number</span><input name="phone" type="tel" autocomplete="tel" placeholder="+254 7xx xxx xxx" required></label>
+              <label class="field"><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
+            </fieldset>
 
-      <label for="brand">Choose your preferred brand</label>
-      <select id="model" required>
-        <option value="">Choose your preferred brand</option>
-        <option>Alpha Romea</option>
-        <option>BMW</option>
-        <option>Chevrolet</option>
-        <option>Ford</option>
-        <option>Honda</option>
-        <option>Hyundai</option>
-        <option>Jeep</option>
-        <option>Land Cruiser</option>
-        <option>Mazda</option>
-        <option>Nissan</option>
-        <option>Toyota</option>
-        <option>Volkswagen</option>
-        <option>Volvo</option>
-        <option>Other</option>
-      </select>
-      
-      <label for="model">Choose your model</label>
-      <select id="model" required>
-        <option value="">Choose your model</option>
-        <option>Sedan</option>
-        <option>SUV</option>
-        <option>Truck</option>
-        <option>Coupe</option>
-        <option>Hatchback</option>
-        <option>Convertible</option>
-        <option>Minivan</option>
-        <option>Wagon</option>
-        <option>Luxury</option>
-        <option>Hybrid</option>
-        <option>Electric</option>
-        <option>Performance</option>
-        <option>Crossover</option>
+            <fieldset class="form-step">
+              <legend>3. When &amp; where</legend>
+              <label class="field"><span>Preferred date</span><input name="preferred_date" type="date" required data-min-today></label>
+              <label class="field"><span>Preferred time</span>
+                <select name="preferred_time" required>
+                  <option value="">Select a time</option>
+                  <option>Morning (8 – 11 AM)</option>
+                  <option>Midday (11 AM – 2 PM)</option>
+                  <option>Afternoon (2 – 6 PM)</option>
+                </select>
+              </label>
+              <div class="field">
+                <span>Location</span>
+                <div class="choice-row">
+                  <label class="choice"><input type="radio" name="location" value="Showroom" checked><span>Our showroom</span></label>
+                  <label class="choice"><input type="radio" name="location" value="Home / office"><span>Home / office</span></label>
+                </div>
+              </div>
+              <label class="field" data-address hidden><span>Your address or area</span><input name="address" placeholder="City / town, estate or landmark" autocomplete="street-address"></label>
+              <label class="field"><span>Anything we should know? <em>(optional)</em></span><textarea name="message" rows="3" placeholder="Trade-in, financing questions, accessibility needs…"></textarea></label>
+            </fieldset>
+          </div>
 
-      </select>
-
-
-      <p class="note">Your selected dealer will provide you with their best selling price on this vehicle.</p>
-      <p class="note small">Image may not sow exact vehicles sold by DCD.</p>
-    </div>
-
-    
-    <div class="column">
-      <h2>2. Your Information</h2>
-      <p class="privacy-text">
-        By providing my contact information below, I consent that Denver dealership and/or a DC dealer can contact me with any DCD offers and DCD product information. <a href="#">DCD Privacy Statement</a>
-      </p>
-      <label>First Name: </label>
-      <input type="text" required />
-
-      <label>Last Name: </label>
-      <input type="text" required />
-
-      <label>Phone Number:</label>
-      <input type="tel" />
-
-      <label>Email: </label>
-      <input type="email" required />
-    </div>
-
-    
-    <div class="column">
-      <h2>3. Your location</h2>
-      <input type="text" placeholder="Search by City/Town, ZIP Code, or Location" />
-      <button class="update-btn">UPDATE</button>
-
-      <label>Additional details to help your dealer with this request:</label>
-      <textarea></textarea>
-
-      <button class="submit-btn">SUBMIT</button>
-    </div>
+          <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+          <div class="form-footer">
+            <label class="check"><input type="checkbox" name="consent" value="yes" required> I agree that Denver Car Dealership may contact me about this request and send DCD offers and product information. <a href="about.html#privacy">Privacy statement</a></label>
+            <button class="btn btn--light" type="submit">Request test drive</button>
+          </div>
+          <div class="form-status" role="status" aria-live="polite" style="margin-top: 20px"></div>
+        </form>
+      </div>
+    </section>
   </main>
+
+  <footer id="site-footer"></footer>
 </body>
 </html>

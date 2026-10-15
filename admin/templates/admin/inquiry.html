@@ -1,0 +1,46 @@
+{% extends "admin/base.html" %}
+{% block title %}Inquiry from {{ inquiry.name }}{% endblock %}
+{% block eyebrow %}<a href="{{ url_for('admin.inquiries') }}">← Inquiries</a>{% endblock %}
+{% block heading %}{{ kinds[inquiry.kind] }} request · {{ inquiry.name }}{% endblock %}
+{% block actions %}
+<form method="post" action="{{ url_for('admin.inquiry_status', inquiry_id=inquiry.id) }}" class="inline">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <select name="status" class="status-select status-{{ inquiry.status }}" onchange="this.form.submit()" aria-label="Status">
+    {% for s in statuses %}<option value="{{ s }}" {{ 'selected' if s == inquiry.status }}>{{ s|capitalize }}</option>{% endfor %}
+  </select>
+</form>
+<form method="post" action="{{ url_for('admin.inquiry_delete', inquiry_id=inquiry.id) }}" class="inline" onsubmit="return confirm('Delete this inquiry?')">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <button class="btn ghost danger" type="submit">Delete</button>
+</form>
+{% endblock %}
+{% block content %}
+<div class="grid-2">
+  <section class="panel">
+    <h2>Customer</h2>
+    <dl class="dl">
+      <dt>Name</dt><dd>{{ inquiry.name }}</dd>
+      {% if inquiry.email %}<dt>Email</dt><dd><a href="mailto:{{ inquiry.email }}">{{ inquiry.email }}</a></dd>{% endif %}
+      {% if inquiry.phone %}<dt>Phone</dt><dd><a href="tel:{{ inquiry.phone }}">{{ inquiry.phone }}</a></dd>{% endif %}
+      <dt>Received</dt><dd>{{ inquiry.created_at }} UTC</dd>
+      {% if inquiry.vehicle_title %}<dt>Vehicle</dt><dd><a href="/vehicle?id={{ inquiry.vehicle_slug }}" target="_blank" rel="noopener">{{ inquiry.vehicle_title }}</a></dd>{% endif %}
+    </dl>
+    <div class="quick-actions">
+      {% if inquiry.email %}<a class="btn" href="mailto:{{ inquiry.email }}?subject={{ ('Re: ' ~ (inquiry.subject or 'Your inquiry at Denver Car Dealership'))|urlencode }}">Reply by email</a>{% endif %}
+      {% if inquiry.phone %}<a class="btn ghost" href="tel:{{ inquiry.phone }}">Call</a>
+      <a class="btn ghost" href="https://wa.me/{{ inquiry.phone|replace('+', '')|replace(' ', '') }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Request</h2>
+    <dl class="dl">
+      {% if inquiry.subject %}<dt>Subject</dt><dd>{{ inquiry.subject }}</dd>{% endif %}
+      {% for k, v in inquiry.details.items() %}
+      <dt>{{ k.replace('_', ' ')|capitalize }}</dt><dd>{{ v }}</dd>
+      {% endfor %}
+    </dl>
+    {% if inquiry.message %}<h3>Message</h3><p class="message">{{ inquiry.message }}</p>{% endif %}
+  </section>
+</div>
+{% endblock %}

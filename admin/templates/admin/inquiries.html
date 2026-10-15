@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+{% block title %}Inquiries{% endblock %}
+{% block heading %}Inquiries{% endblock %}
+{% block actions %}<a class="btn ghost" href="{{ url_for('admin.inquiries_csv') }}">Export CSV</a>{% endblock %}
+{% block content %}
+<nav class="tabs">
+  <a href="{{ url_for('admin.inquiries', status=status) }}" class="{{ 'active' if not kind }}">All</a>
+  {% for k, label in kinds.items() %}
+  <a href="{{ url_for('admin.inquiries', kind=k, status=status) }}" class="{{ 'active' if kind == k }}">{{ label }}</a>
+  {% endfor %}
+  <span class="tabs-spacer"></span>
+  <a href="{{ url_for('admin.inquiries', kind=kind) }}" class="{{ 'active' if not status }}">Any status</a>
+  {% for s in statuses %}
+  <a href="{{ url_for('admin.inquiries', kind=kind, status=s) }}" class="{{ 'active' if status == s }}">{{ s|capitalize }}</a>
+  {% endfor %}
+</nav>
+
+{% if inquiries %}
+<div class="table-wrap">
+<table class="table">
+  <thead><tr><th>Received</th><th>Type</th><th>Customer</th><th>About</th><th>Status</th></tr></thead>
+  <tbody>
+  {% for i in inquiries %}
+  <tr class="{{ 'unread' if i.status == 'new' }}">
+    <td class="nowrap">{{ i.created_at[:16] }}</td>
+    <td><span class="pill kind-{{ i.kind }}">{{ kinds[i.kind] }}</span></td>
+    <td><a class="strong" href="{{ url_for('admin.inquiry', inquiry_id=i.id) }}">{{ i.name }}</a><div class="muted">{{ i.email }}{% if i.email and i.phone %} · {% endif %}{{ i.phone }}</div></td>
+    <td class="muted">{{ i.vehicle_title or i.subject or (i.message[:70] ~ ('…' if i.message|length > 70 else '')) }}</td>
+    <td><span class="pill status-{{ i.status }}">{{ i.status }}</span></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+<p class="empty panel">No inquiries here yet.</p>
+{% endif %}
+{% endblock %}

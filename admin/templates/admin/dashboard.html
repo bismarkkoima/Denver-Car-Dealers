@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block heading %}Welcome back, {{ session.admin }}{% endblock %}
+{% block actions %}<a class="btn" href="{{ url_for('admin.vehicle_new') }}">+ Add vehicle</a>{% endblock %}
+{% block content %}
+<section class="stats">
+  <a class="stat" href="{{ url_for('admin.vehicles', status='available') }}"><span>Available</span><strong>{{ stats.available }}</strong></a>
+  <a class="stat" href="{{ url_for('admin.vehicles', status='reserved') }}"><span>Reserved</span><strong>{{ stats.reserved }}</strong></a>
+  <a class="stat" href="{{ url_for('admin.vehicles', status='sold') }}"><span>Sold</span><strong>{{ stats.sold }}</strong></a>
+  <a class="stat accent" href="{{ url_for('admin.inquiries', status='new') }}"><span>New inquiries</span><strong>{{ stats.new_inquiries }}</strong></a>
+  <div class="stat wide"><span>Stock value (available + reserved)</span><strong>{{ money(stats.stock_value) }}</strong></div>
+</section>
+
+<div class="grid-2">
+  <section class="panel">
+    <div class="panel-head"><h2>Latest inquiries</h2><a href="{{ url_for('admin.inquiries') }}">View all →</a></div>
+    {% if inquiries %}
+    <ul class="list">
+      {% for i in inquiries %}
+      <li>
+        <a href="{{ url_for('admin.inquiry', inquiry_id=i.id) }}">
+          <span class="pill kind-{{ i.kind }}">{{ i.kind.replace('_', ' ') }}</span>
+          <strong>{{ i.name }}</strong>
+          <span class="muted">{{ i.vehicle_title or i.subject or (i.message[:50] if i.message) }}</span>
+          <span class="pill status-{{ i.status }}">{{ i.status }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}<p class="empty">No inquiries yet. Messages from the contact, test drive and financing forms will appear here.</p>{% endif %}
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Inventory</h2><a href="{{ url_for('admin.vehicles') }}">Manage →</a></div>
+    {% if vehicles %}
+    <ul class="list">
+      {% for v in vehicles %}
+      <li>
+        <a href="{{ url_for('admin.vehicle_edit', vehicle_id=v.id) }}">
+          {% if v.images %}<img class="thumb" src="/{{ v.images[0] }}" alt="">{% else %}<span class="thumb"></span>{% endif %}
+          <strong>{{ v.title }}</strong>
+          <span class="muted">{{ money(v.price) }}</span>
+          <span class="pill status-{{ v.status }}">{{ v.status }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}<p class="empty">No vehicles yet. <a href="{{ url_for('admin.vehicle_new') }}">Add your first one.</a></p>{% endif %}
+  </section>
+</div>
+{% endblock %}

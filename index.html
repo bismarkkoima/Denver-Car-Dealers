@@ -1,67 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <title>Denver car dealership</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Denver Car Dealership — Where Value Meets the Road</title>
+  <meta name="description" content="Premium new and foreign-used SUVs, sedans and pickups in Eldoret, Kenya. Flexible financing, test drives and honest advice.">
+  <meta property="og:title" content="Denver Car Dealership">
+  <meta property="og:description" content="Where value meets the road. Premium vehicles, flexible financing and test drives in Eldoret.">
+  <meta property="og:image" content="images/cars/lexus-lx600-1.jpg">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script defer src="js/main.js"></script>
+  <script defer src="js/home.js"></script>
 </head>
-<body>
+<body class="has-hero">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header id="site-header"></header>
 
-    <div class="sidebar" id="sidebar">
-    <div class="sidebar-content">
-        <p>Sidebar Menu</p>
-    </div>
-    </div>
-
-    
-    <div class="header-bar">
-    <img src="images/logoforpage.png" alt="Header Bar">
-
-    
-    <div class="nav">
-        <div class="menu-icon" id="menuToggle">
-        <span></span>
-        <span></span>
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero__media">
+        <video autoplay muted loop playsinline preload="auto" poster="images/posters/showroom-lx.jpg">
+          <source src="videos/showroom-lx.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero__content">
+        <p class="eyebrow reveal">Denver Car Dealership · Eldoret</p>
+        <h1 class="display display--xl reveal reveal-delay-1">Where value<br>meets the road</h1>
+        <p class="lead reveal reveal-delay-2">Hand-picked luxury SUVs, performance sedans and hard-working pickups, each inspected, fairly priced and ready to drive home.</p>
+        <div class="btn-row reveal reveal-delay-3">
+          <a class="btn btn--light" href="vehicles.html">Explore inventory</a>
+          <a class="btn btn--light btn--ghost" href="testdrive.html">Book a test drive</a>
         </div>
-        <div class="nav-item">VEHICLES</div>
-        <div class="nav-item">SHOP</div>
-    </div>
-    </div>
-    
-<nav class="sub-navbar">
-    <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Vehicles</a></li>
-    <li><a href="#">Shop</a></li>
-    <li><a href="contact.html">Contact</a></li>   
-    <li><a href="financing.html">Financing</a></li>      
-    <li><a href="testdrive.html">Test Drive</a></li>                                                                                                                                                                                                                                                                                                      
-    </ul>
-</nav>
-    <section class="video-section">
-        <video src="videos/0045cffaac6e56a7aab3f31c46823be9.mp4" autoplay muted loop playsinline></video>
-        <video src="videos/2abd064798ffe4b1eece7baaee827e84_720w.mp4" autoplay muted loop playsinline></video>
-        <video src="videos/b4ab2b07c2ee0823d6815bd426b84bb3.mp4" autoplay muted loop playsinline></video>
-        <video src="videos/c6079a954a43a8939d194c2ffd3842b1.mp4" autoplay muted loop playsinline></video>
+      </div>
+      <a class="hero__scroll" href="#lineup">Scroll</a>
     </section>
-    
 
-<div class="vehicle-panel" id="vehiclePanel">
-    <div class="vehicle-content">
-        <h3>Select Your Vehicle</h3>
-        <ul>
-        <li>Model A</li>
-        <li>Model B</li>
-        <li>Model C</li>
-        </ul>
-    </div>
-    </div>
-    
-    <div class="content">
-    <p></p>
-    </div>
+    <!-- Lineup -->
+    <section class="section" id="lineup">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow muted">The lineup</p>
+            <h2 class="display display--lg">Find your drive</h2>
+          </div>
+          <div class="rail-controls">
+            <button class="rail-btn" type="button" data-rail="prev" aria-label="Previous vehicles">←</button>
+            <button class="rail-btn" type="button" data-rail="next" aria-label="Next vehicles">→</button>
+          </div>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Filter by body type" data-lineup-tabs style="margin-bottom: 32px">
+          <button class="tab" role="tab" aria-selected="true" data-body="">All</button>
+        </div>
+        <div class="rail" data-lineup aria-live="polite">
+          <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+          <div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>
+        </div>
+        <div style="margin-top: 48px; text-align: center">
+          <a class="btn btn--ghost" href="vehicles.html">View all inventory</a>
+        </div>
+      </div>
+    </section>
 
-    <script src="script.js"></script>
+    <!-- Performance banner -->
+    <section class="banner">
+      <div class="banner__media">
+        <video autoplay muted loop playsinline preload="none" poster="images/posters/coupe-drive.jpg">
+          <source src="videos/coupe-drive.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="banner__content">
+        <p class="eyebrow reveal">Performance collection</p>
+        <h2 class="display display--lg reveal reveal-delay-1">Power,<br>refined</h2>
+        <p class="lead reveal reveal-delay-2">From AMG biturbo V8s to twin-turbo luxury SUVs, experience the cars that make every drive an occasion.</p>
+        <a class="btn btn--light reveal reveal-delay-3" href="vehicles.html?body=SUV">Shop performance</a>
+      </div>
+    </section>
+
+    <!-- Cabin videos -->
+    <section class="section dark">
+      <div class="container">
+        <div class="section-head section-head--center">
+          <p class="eyebrow muted">Crafted interiors</p>
+          <h2 class="display display--lg">Step inside</h2>
+          <p class="lead muted">Hand-stitched leather, quiet cabins and the latest tech. See the detail before you visit.</p>
+        </div>
+        <div class="cabin-grid">
+          <figure class="reveal"><video autoplay muted loop playsinline preload="none" poster="images/posters/cabin-grille.jpg"><source src="videos/cabin-grille.mp4" type="video/mp4"></video><figcaption>Bold presence</figcaption></figure>
+          <figure class="reveal reveal-delay-1"><video autoplay muted loop playsinline preload="none" poster="images/posters/cabin-red.jpg"><source src="videos/cabin-red.mp4" type="video/mp4"></video><figcaption>Signature details</figcaption></figure>
+          <figure class="reveal reveal-delay-2"><video autoplay muted loop playsinline preload="none" poster="images/posters/cabin-landcruiser.jpg"><source src="videos/cabin-landcruiser.mp4" type="video/mp4"></video><figcaption>Built for Kenya</figcaption></figure>
+          <figure class="reveal reveal-delay-3"><video autoplay muted loop playsinline preload="none" poster="images/posters/cabin-white.jpg"><source src="videos/cabin-white.mp4" type="video/mp4"></video><figcaption>Modern cockpit</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shopping tools -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow muted">Shopping tools</p>
+            <h2 class="display display--lg">Made simple</h2>
+          </div>
+        </div>
+        <div class="tiles">
+          <a class="tile reveal" href="financing.html">
+            <div class="tile__media"><img src="images/cars/toyota-rav4-1.jpg" alt="Toyota RAV4 parked outside" loading="lazy"></div>
+            <h3 class="display display--sm">Flexible financing</h3>
+            <p>Estimate your monthly payment and apply for credit in minutes, with deposits from 30%.</p>
+            <span class="link-arrow">Calculate payments</span>
+          </a>
+          <a class="tile reveal reveal-delay-1" href="testdrive.html">
+            <div class="tile__media"><img src="images/cars/lexus-lx600-3.jpg" alt="Lexus LX 600 dashboard" loading="lazy"></div>
+            <h3 class="display display--sm">Book a test drive</h3>
+            <p>Pick a car and a time. We'll have it ready at the showroom, or bring it to you.</p>
+            <span class="link-arrow">Schedule now</span>
+          </a>
+          <a class="tile reveal reveal-delay-2" href="contact.html?subject=Trade-in">
+            <div class="tile__media"><img src="images/cars/toyota-land-cruiser-200-1.jpg" alt="Toyota Land Cruiser on the road" loading="lazy"></div>
+            <h3 class="display display--sm">Trade in your car</h3>
+            <p>Get a fair valuation for your current vehicle and put it towards your next one.</p>
+            <span class="link-arrow">Get a valuation</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brands -->
+    <section class="brands" aria-label="Brands we sell">
+      <div class="brands__track">
+        <img src="images/Car_dealership_logos_centered.png" alt="Land Rover, Isuzu, Mitsubishi, Cadillac, Mercedes-Benz and BMW">
+        <img src="images/Car_dealership_logos_centered.png" alt="" aria-hidden="true">
+      </div>
+    </section>
+
+    <!-- Visit -->
+    <section class="section section--mist">
+      <div class="container split">
+        <div class="split__media reveal"><img src="images/cars/lexus-lx600-1.jpg" alt="White Lexus LX 600 in the Denver showroom" loading="lazy"></div>
+        <div class="reveal reveal-delay-1">
+          <p class="eyebrow muted">Visit the showroom</p>
+          <h2 class="display display--lg" style="margin-top: 14px">Come say hello</h2>
+          <p class="lead muted">Walk the floor, sit in the cars and talk to people who know them. No pressure, just good advice and a fair deal.</p>
+          <dl class="info-strip" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 36px">
+            <div><dt>Location</dt><dd data-site="address"></dd></div>
+            <div><dt>Call</dt><dd><a data-site="phone"></a></dd></div>
+            <div><dt>Hours</dt><dd>Mon – Sat<br>8:00 AM – 6:00 PM</dd></div>
+            <div><dt>Email</dt><dd><a data-site="email"></a></dd></div>
+          </dl>
+          <div class="btn-row">
+            <a class="btn" href="contact.html">Get directions</a>
+            <a class="btn btn--ghost" data-site="whatsapp" data-text="Hi! I'd like to visit the showroom." target="_blank" rel="noopener">WhatsApp us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
 </body>
 </html>
