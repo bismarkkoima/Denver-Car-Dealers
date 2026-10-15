@@ -1,6 +1,6 @@
 /* Vehicle detail page: vehicle.html?id=<slug> */
 document.addEventListener("DOMContentLoaded", async () => {
-  const { loadInventory, renderCards, priceHtml, esc, money, km, monthlyPayment, SITE, ICONS, waHref, toast, syncListButtons, initInquiryForm, initReveal } = window.DCD;
+  const { loadInventory, renderCards, carouselHtml, initCarousels, priceHtml, esc, money, km, monthlyPayment, SITE, ICONS, waHref, toast, syncListButtons, initInquiryForm, initReveal } = window.DCD;
   const root = document.querySelector("[data-vehicle]");
   const id = new URLSearchParams(location.search).get("id");
   const cars = await loadInventory();
@@ -32,15 +32,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     <div class="vd">
       <div>
         <div class="gallery">
-          <div class="gallery__main">
-            ${v.images.length ? `<img data-main src="${esc(v.images[0])}" alt="${esc(v.title)}">` : ""}
-            ${v.images.length > 1 ? `
-              <button class="gallery__nav gallery__nav--prev" type="button" data-step="-1" aria-label="Previous photo">←</button>
-              <button class="gallery__nav gallery__nav--next" type="button" data-step="1" aria-label="Next photo">→</button>
-              <span class="gallery__count" data-count>1 / ${v.images.length}</span>` : ""}
-          </div>
+          ${v.images.length ? carouselHtml(v.images, { alt: v.title, variant: "detail" }) : '<div class="carousel--detail"></div>'}
+          ${v.images.length ? `<button type="button" class="glass glass--icon gallery__expand" data-expand aria-label="View photos full screen">${ICONS.expand}</button>` : ""}
           ${v.images.length > 1 ? `<div class="gallery__thumbs">${v.images.map((src, i) =>
-            `<button type="button" data-index="${i}" aria-label="Photo ${i + 1}" aria-current="${i === 0}"><img src="${esc(src)}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
+            `<button type="button" data-index="${i}" aria-label="Show photo ${i + 1}" aria-current="${i === 0}"><img src="${esc(src)}" alt="" loading="lazy"></button>`).join("")}</div>` : ""}
         </div>
 
         ${v.description ? `<div class="vd__block"><h2 class="display display--sm">Overview</h2><p class="lead">${esc(v.description)}</p></div>` : ""}
@@ -119,26 +114,53 @@ document.addEventListener("DOMContentLoaded", async () => {
   }).replace(/</g, "\\u003c");
   document.head.appendChild(ld);
 
-  // Gallery
-  if (v.images.length > 1) {
-    let current = 0;
-    const main = root.querySelector("[data-main]");
-    const counter = root.querySelector("[data-count]");
-    const thumbs = root.querySelectorAll("[data-index]");
-    const go = (i) => {
-      current = (i + v.images.length) % v.images.length;
-      main.src = v.images[current];
-      counter.textContent = `${current + 1} / ${v.images.length}`;
-      thumbs.forEach((t, n) => t.setAttribute("aria-current", n === current));
-    };
-    root.querySelectorAll("[data-step]").forEach((b) => b.addEventListener("click", () => go(current + Number(b.dataset.step))));
-    thumbs.forEach((t) => t.addEventListener("click", () => go(Number(t.dataset.index))));
-    document.addEventListener("keydown", (e) => {
-      if (e.target.closest("input, textarea, select")) return;
-      if (e.key === "ArrowRight") go(current + 1);
-      if (e.key === "ArrowLeft") go(current - 1);
+  // Gallery: swipe carousel, synced thumbnails and a full-screen viewer
+  const gallery = root.querySelector(".gallery");
+  const main = gallery.querySelector("[data-carousel]");
+  initCarousels(gallery);
+  const thumbs = gallery.querySelectorAll("[data-index]");
+  if (main) {
+    main.addEventListener("carousel:change", (e) => {
+      thumbs.forEach((t, n) => t.setAttribute("aria-current", n === e.detail.index));
+      thumbs[e.detail.index]?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+    });
+    thumbs.forEach((t) => t.addEventListener("click", () => main.goTo(Number(t.dataset.index))));
+    gallery.querySelector("[data-expand]").addEventListener("click", () => openLightbox(currentIndex()));
+    main.querySelector(".carousel__track").addEventListener("dblclick", () => openLightbox(currentIndex()));
+  }
+  function currentIndex() {
+    const track = main.querySelector(".carousel__track");
+    return Math.round(track.scrollLeft / (track.clientWidth || 1));
+  }
+  function openLightbox(index) {
+    const dialog = document.createElement("dialog");
+    dialog.className = "lightbox";
+    dialog.setAttribute("aria-label", `${v.title} photos`);
+    dialog.innerHTML = `
+      <p class="lightbox__title">${esc(v.title)}</p>
+      <button type="button" class="glass glass--icon lightbox__close" aria-label="Close photos">${ICONS.close}</button>
+      ${carouselHtml(v.images, { alt: v.title, variant: "lightbox", start: index })}`;
+    document.body.appendChild(dialog);
+    document.body.classList.add("lightbox-open");
+    dialog.showModal();
+    initCarousels(dialog);
+    const lb = dialog.querySelector("[data-carousel]");
+    let at = index;
+    lb.addEventListener("carousel:change", (e) => { at = e.detail.index; });
+    lb.querySelector(".carousel__track").focus({ preventScroll: true });
+    dialog.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { e.preventDefault(); lb.goTo(at + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); lb.goTo(at - 1); }
+    });
+    dialog.querySelector(".lightbox__close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("close", () => {
+      main.goTo(at, false);
+      document.body.classList.remove("lightbox-open");
+      dialog.remove();
+      gallery.querySelector("[data-expand]").focus({ preventScroll: true });
     });
   }
+
 
   // Enquiry form
   const section = document.querySelector("[data-enquire]");

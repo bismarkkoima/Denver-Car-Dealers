@@ -42,6 +42,9 @@
     check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>',
     key: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></svg>',
     swap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 8h14l-4-4M20 16H6l4 4"/></svg>',
+    chevL: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+    chevR: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
+    expand: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
     grid: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
   };
 
@@ -177,6 +180,110 @@
     return money(v.price) + (v.on_offer ? ` <s>${money(v.was_price)}</s>` : "");
   }
 
+  /* --------------------------------------------------------- carousel */
+  /** Swipeable photo carousel. variant: "card" | "detail" | "lightbox". */
+  function carouselHtml(images, { alt = "", href = "", variant = "card", start = 0 } = {}) {
+    const many = images.length > 1;
+    const slide = (src, i) => {
+      const img = `<img src="${esc(src)}" alt="${esc(alt)}${many ? `, photo ${i + 1} of ${images.length}` : ""}"${i === start ? "" : ' loading="lazy"'} draggable="false">`;
+      return href
+        ? `<a class="carousel__slide" href="${href}" tabindex="-1">${img}</a>`
+        : `<div class="carousel__slide">${img}</div>`;
+    };
+    return `
+      <div class="carousel carousel--${variant}" data-carousel data-start="${start}" role="region" aria-roledescription="carousel" aria-label="${esc(alt)} photos">
+        <div class="carousel__track" tabindex="${variant === "card" ? -1 : 0}">${images.map(slide).join("")}</div>
+        ${many ? `
+          <button type="button" class="glass glass--icon carousel__arrow carousel__arrow--prev" data-dir="-1" aria-label="Previous photo">${ICONS.chevL}</button>
+          <button type="button" class="glass glass--icon carousel__arrow carousel__arrow--next" data-dir="1" aria-label="Next photo">${ICONS.chevR}</button>
+          <div class="glass glass--pill carousel__dots" aria-hidden="true">
+            ${images.map((_, i) => `<span class="carousel__dot"${i === start ? ' data-active=""' : ""}></span>`).join("")}
+          </div>` : ""}
+        ${variant !== "card" && many ? `<span class="glass glass--pill carousel__count" aria-live="polite">${start + 1} / ${images.length}</span>` : ""}
+      </div>`;
+  }
+
+  /** Wire up swipe, drag, arrows, dots and keys for every new carousel in scope. */
+  function initCarousels(scope = document) {
+    scope.querySelectorAll("[data-carousel]:not([data-ready])").forEach((el) => {
+      el.dataset.ready = "";
+      const track = el.querySelector(".carousel__track");
+      const slides = track.children;
+      const dots = el.querySelectorAll(".carousel__dot");
+      const count = el.querySelector(".carousel__count");
+      const total = slides.length;
+      let index = Number(el.dataset.start) || 0;
+
+      const width = () => track.clientWidth || 1;
+      const goTo = (i, smooth = true) => {
+        const target = (i + total) % total;
+        track.scrollTo({ left: target * width(), behavior: smooth ? "smooth" : "auto" });
+      };
+      el.goTo = goTo;
+
+      const update = () => {
+        const i = Math.min(total - 1, Math.max(0, Math.round(track.scrollLeft / width())));
+        if (i === index && el.dataset.inited) return;
+        el.dataset.inited = "";
+        index = i;
+        dots.forEach((d, n) => (n === i ? d.setAttribute("data-active", "") : d.removeAttribute("data-active")));
+        if (count) count.textContent = `${i + 1} / ${total}`;
+        el.dispatchEvent(new CustomEvent("carousel:change", { detail: { index: i } }));
+      };
+      let ticking = false;
+      track.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { update(); ticking = false; });
+      }, { passive: true });
+
+      el.querySelectorAll("[data-dir]").forEach((b) => b.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goTo(index + Number(b.dataset.dir));
+      }));
+      track.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") { e.preventDefault(); goTo(index + 1); }
+        if (e.key === "ArrowLeft") { e.preventDefault(); goTo(index - 1); }
+      });
+
+      // Mouse drag (touch screens already swipe natively with momentum)
+      let drag = null;
+      track.addEventListener("pointerdown", (e) => {
+        if (e.pointerType !== "mouse" || e.button !== 0 || total < 2) return;
+        drag = { x: e.clientX, left: track.scrollLeft, moved: 0, t: performance.now() };
+        track.classList.add("is-dragging");
+      });
+      window.addEventListener("pointermove", (e) => {
+        if (!drag) return;
+        const dx = e.clientX - drag.x;
+        drag.moved = Math.max(drag.moved, Math.abs(dx));
+        track.scrollLeft = drag.left - dx;
+      });
+      window.addEventListener("pointerup", (e) => {
+        if (!drag) return;
+        const dx = e.clientX - drag.x;
+        const fast = Math.abs(dx) / (performance.now() - drag.t) > 0.35;
+        const start = Math.round(drag.left / width());
+        const target = Math.abs(dx) > width() * 0.18 || fast ? start - Math.sign(dx) : start;
+        const moved = drag.moved;
+        drag = null;
+        track.scrollTo({ left: Math.min(total - 1, Math.max(0, target)) * width(), behavior: "smooth" });
+        setTimeout(() => track.classList.remove("is-dragging"), 480);
+        if (moved > 6) {
+          const block = (ev) => { ev.preventDefault(); ev.stopPropagation(); };
+          track.addEventListener("click", block, { capture: true, once: true });
+          setTimeout(() => track.removeEventListener("click", block, { capture: true }), 50);
+        }
+      });
+
+      // Keep the current photo in place when the window is resized
+      if ("ResizeObserver" in window) new ResizeObserver(() => goTo(index, false)).observe(track);
+      if (index) requestAnimationFrame(() => goTo(index, false));
+      else update();
+    });
+  }
+
   function carCard(v, opts = {}) {
     const img = v.images[0];
     const href = `vehicle.html?id=${encodeURIComponent(v.slug)}`;
@@ -188,7 +295,7 @@
     return `
       <article class="car-card${v.status === "sold" ? " is-sold" : ""}">
         <div class="car-card__media">
-          <a href="${href}" tabindex="-1" aria-hidden="true">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : ""}</a>
+          ${img ? carouselHtml(v.images, { alt: v.title, href, variant: "card" }) : `<a class="carousel__slide" href="${href}" tabindex="-1" aria-hidden="true"></a>`}
           ${badge}
           <div class="car-card__tools">
             <button type="button" class="icon-btn" data-save="${esc(v.slug)}" aria-pressed="false" aria-label="Save ${esc(v.title)}">${ICONS.heart}</button>
@@ -208,6 +315,7 @@
   /** Render car cards into a container and wire up their save/compare state. */
   function renderCards(container, cars, opts) {
     container.innerHTML = cars.map((c) => carCard(c, opts)).join("");
+    initCarousels(container);
     syncListButtons();
   }
 
@@ -640,6 +748,6 @@
 
   window.DCD = {
     SITE, ICONS, esc, money, km, params, monthlyPayment, loanFromPayment, loadInventory, carCard, renderCards,
-    priceHtml, lists, toast, syncListButtons, initReveal, initInquiryForm, waHref, telHref, COMPARE_MAX,
+    priceHtml, lists, toast, carouselHtml, initCarousels, syncListButtons, initReveal, initInquiryForm, waHref, telHref, COMPARE_MAX,
   };
 })();

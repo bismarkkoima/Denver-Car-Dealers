@@ -76,7 +76,7 @@ css/admin.css       Admin panel styles
 js/main.js          Shared header, footer, menus, forms, inventory loader
 js/*.js             Page-specific scripts
 images/, videos/    Media (videos are web-optimised, with poster images)
-fonts/              Self-hosted Google Fonts (Inter, Jost)
+fonts/              Self-hosted Mona Sans font (expanded width for the Cadillac-style look)
 tests/              Automated tests: python -m unittest discover tests
 ```
 

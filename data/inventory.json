@@ -17,7 +17,7 @@
       "drivetrain": "4WD",
       "description": "Flagship luxury with full-size presence. Twin-turbo V6, semi-aniline leather, rear-seat entertainment and a cabin that is quiet at any speed.",
       "features": ["Mark Levinson audio", "Heated & ventilated seats", "360° camera", "Adaptive air suspension", "Rear entertainment screens", "Lexus Safety System+"],
-      "images": ["images/cars/lexus-lx600-1.jpg", "images/cars/lexus-lx600-3.jpg", "images/cars/lexus-lx600-2.jpg"],
+      "images": ["images/cars/lexus-lx600-1.jpg", "images/cars/lexus-lx600-3.jpg", "images/cars/lexus-lx600-2.jpg", "images/cars/lexus-lx600-4.jpg"],
       "status": "available",
       "featured": true
     },
@@ -60,7 +60,7 @@
       "drivetrain": "4WD",
       "description": "The go-anywhere legend. Twin-turbo V8 diesel, full-time 4WD with crawl control and a premium leather cabin for seven.",
       "features": ["Crawl Control", "Multi-terrain select", "Cool box", "Sunroof", "Power tailgate", "7 seats"],
-      "images": ["images/cars/toyota-land-cruiser-200-1.jpg", "images/cars/toyota-land-cruiser-200-2.jpg", "images/cars/toyota-land-cruiser-200-3.jpg"],
+      "images": ["images/cars/toyota-land-cruiser-200-1.jpg", "images/cars/toyota-land-cruiser-200-2.jpg", "images/cars/toyota-land-cruiser-200-3.jpg", "images/cars/toyota-land-cruiser-200-4.jpg"],
       "status": "available",
       "featured": true
     },

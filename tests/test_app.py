@@ -55,7 +55,7 @@ class AppTestCase(unittest.TestCase):
                 self.assertEqual(res.status_code, 200, path)
 
     def test_fonts_and_robots_served(self):
-        for path in ["/fonts/fonts.css", "/fonts/inter-latin.woff2", "/fonts/jost-latin.woff2", "/robots.txt"]:
+        for path in ["/fonts/fonts.css", "/fonts/mona-sans-latin.woff2", "/fonts/mona-sans-latin-ext.woff2", "/robots.txt"]:
             with self.client.get(path) as res:
                 self.assertEqual(res.status_code, 200, path)
 
