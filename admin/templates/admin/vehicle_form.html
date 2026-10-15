@@ -1,0 +1,79 @@
+{% extends "admin/base.html" %}
+{% set editing = vehicle.id is defined %}
+{% block title %}{{ 'Edit vehicle' if editing else 'Add vehicle' }}{% endblock %}
+{% block eyebrow %}<a href="{{ url_for('admin.vehicles') }}">← Inventory</a>{% endblock %}
+{% block heading %}{{ vehicle.title if editing else 'Add a vehicle' }}{% endblock %}
+{% block content %}
+{% if errors %}<div class="flash error">{% for e in errors %}{{ e }}<br>{% endfor %}</div>{% endif %}
+
+<form method="post" enctype="multipart/form-data" class="vehicle-form">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <section class="panel">
+    <h2>Vehicle</h2>
+    <div class="fields">
+      <label>Make *<input name="make" value="{{ vehicle.make or '' }}" placeholder="Toyota" required></label>
+      <label>Model *<input name="model" value="{{ vehicle.model or '' }}" placeholder="Land Cruiser" required></label>
+      <label>Trim / variant<input name="trim" value="{{ vehicle.trim or '' }}" placeholder="V8 ZX"></label>
+      <label>Year *<input name="year" type="number" min="1950" max="2100" value="{{ vehicle.year or '' }}" required></label>
+      <label>Price (KSh) *<input name="price" type="number" min="0" step="1000" value="{{ vehicle.price or '' }}" required></label>
+      <label>Mileage (km)<input name="mileage" type="number" min="0" value="{{ vehicle.mileage or 0 }}"></label>
+      <label>Body type
+        <select name="body_type">{% for b in body_types %}<option {{ 'selected' if b == vehicle.body_type }}>{{ b }}</option>{% endfor %}</select>
+      </label>
+      <label>Condition
+        <select name="condition">{% for c in conditions %}<option {{ 'selected' if c == vehicle.condition }}>{{ c }}</option>{% endfor %}</select>
+      </label>
+      <label>Transmission
+        <select name="transmission">{% for t in transmissions %}<option {{ 'selected' if t == vehicle.transmission }}>{{ t }}</option>{% endfor %}</select>
+      </label>
+      <label>Fuel
+        <select name="fuel">{% for f in fuels %}<option {{ 'selected' if f == vehicle.fuel }}>{{ f }}</option>{% endfor %}</select>
+      </label>
+      <label>Engine size (cc)<input name="engine_cc" type="number" min="0" value="{{ vehicle.engine_cc or '' }}"></label>
+      <label>Drivetrain<input name="drivetrain" value="{{ vehicle.drivetrain or '' }}" placeholder="4WD / AWD / FWD / RWD"></label>
+      <label>Exterior colour<input name="exterior_color" value="{{ vehicle.exterior_color or '' }}"></label>
+      <label>Interior<input name="interior_color" value="{{ vehicle.interior_color or '' }}"></label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Listing</h2>
+    <div class="fields">
+      <label class="full">Description<textarea name="description" rows="4" placeholder="What makes this car special?">{{ vehicle.description or '' }}</textarea></label>
+      <label class="full">Features <small>(one per line)</small><textarea name="features" rows="5" placeholder="Sunroof&#10;Leather seats&#10;360° camera">{{ (vehicle.features or [])|join('\n') }}</textarea></label>
+      <label>Status
+        <select name="status">{% for s in statuses %}<option value="{{ s }}" {{ 'selected' if s == vehicle.status }}>{{ s|capitalize }}{{ ' (hidden from website)' if s == 'draft' }}</option>{% endfor %}</select>
+      </label>
+      <label class="check"><input type="checkbox" name="featured" {{ 'checked' if vehicle.featured }}> Feature on the home page</label>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Photos</h2>
+    {% if vehicle.images %}
+    <p class="muted">Choose the cover photo, or tick photos to remove them.</p>
+    <div class="photo-grid">
+      {% for img in vehicle.images %}
+      <figure>
+        <img src="/{{ img }}" alt="">
+        <figcaption>
+          <label><input type="radio" name="cover" value="{{ img }}" {{ 'checked' if loop.first }}> Cover</label>
+          <label class="danger"><input type="checkbox" name="remove_image" value="{{ img }}"> Remove</label>
+        </figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <label class="dropzone">
+      <input type="file" name="photos" accept="image/jpeg,image/png,image/webp" multiple>
+      <span><strong>Upload photos</strong> — JPG, PNG or WEBP. You can select several at once.</span>
+    </label>
+  </section>
+
+  <div class="form-actions">
+    <a class="btn ghost" href="{{ url_for('admin.vehicles') }}">Cancel</a>
+    <button class="btn" type="submit">{{ 'Save changes' if editing else 'Add to inventory' }}</button>
+  </div>
+</form>
+{% endblock %}

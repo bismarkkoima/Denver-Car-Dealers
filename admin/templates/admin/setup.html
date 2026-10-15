@@ -1,0 +1,13 @@
+{% extends "admin/login.html" %}
+{% block title %}Set up admin{% endblock %}
+{% block auth_heading %}Create your admin account{% endblock %}
+{% block auth_form %}
+<p class="muted">This one-time setup creates the first admin login. It disappears once an account exists.</p>
+<form method="post" class="stack">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label>Username<input name="username" autocomplete="username" required autofocus></label>
+  <label>Password <small>(8+ characters)</small><input name="password" type="password" minlength="8" autocomplete="new-password" required></label>
+  <label>Confirm password<input name="confirm" type="password" minlength="8" autocomplete="new-password" required></label>
+  <button class="btn" type="submit">Create account</button>
+</form>
+{% endblock %}

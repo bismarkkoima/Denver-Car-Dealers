@@ -1,0 +1,14 @@
+# Runtime data (database, secret key, uploaded photos)
+instance/
+uploads/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+Thumbs.db

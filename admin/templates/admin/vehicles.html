@@ -1,0 +1,58 @@
+{% extends "admin/base.html" %}
+{% block title %}Inventory{% endblock %}
+{% block heading %}Inventory{% endblock %}
+{% block actions %}<a class="btn" href="{{ url_for('admin.vehicle_new') }}">+ Add vehicle</a>{% endblock %}
+{% block content %}
+<form class="toolbar" method="get">
+  <input type="search" name="q" value="{{ q }}" placeholder="Search make, model, year…">
+  <select name="status" onchange="this.form.submit()">
+    <option value="">All statuses</option>
+    {% for s in ['available', 'reserved', 'sold', 'draft'] %}
+    <option value="{{ s }}" {{ 'selected' if s == status }}>{{ s|capitalize }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn ghost" type="submit">Filter</button>
+</form>
+
+{% if vehicles %}
+<div class="table-wrap">
+<table class="table">
+  <thead><tr><th></th><th>Vehicle</th><th>Price</th><th>Mileage</th><th>Status</th><th></th></tr></thead>
+  <tbody>
+  {% for v in vehicles %}
+    <tr>
+      <td>{% if v.images %}<img class="thumb" src="/{{ v.images[0] }}" alt="">{% else %}<span class="thumb"></span>{% endif %}</td>
+      <td>
+        <a class="strong" href="{{ url_for('admin.vehicle_edit', vehicle_id=v.id) }}">{{ v.title }}</a>
+        <div class="muted">{{ v.trim }} · {{ v.body_type }} · {{ v.condition }}{% if v.featured %} · ★ Featured{% endif %}</div>
+      </td>
+      <td>{{ money(v.price) }}</td>
+      <td>{{ "{:,}".format(v.mileage) }} km</td>
+      <td>
+        <form method="post" action="{{ url_for('admin.vehicle_status', vehicle_id=v.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="next" value="{{ request.full_path }}">
+          <select name="status" class="status-select status-{{ v.status }}" onchange="this.form.submit()" aria-label="Status">
+            {% for s in ['available', 'reserved', 'sold', 'draft'] %}
+            <option value="{{ s }}" {{ 'selected' if s == v.status }}>{{ s|capitalize }}</option>
+            {% endfor %}
+          </select>
+        </form>
+      </td>
+      <td class="row-actions">
+        {% if v.status != 'draft' %}<a href="/vehicle?id={{ v.slug }}" target="_blank" rel="noopener">View</a>{% endif %}
+        <a href="{{ url_for('admin.vehicle_edit', vehicle_id=v.id) }}">Edit</a>
+        <form method="post" action="{{ url_for('admin.vehicle_delete', vehicle_id=v.id) }}" onsubmit="return confirm('Delete this vehicle? This cannot be undone.')">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="link-btn danger" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+<p class="empty panel">No vehicles match. <a href="{{ url_for('admin.vehicle_new') }}">Add a vehicle</a>.</p>
+{% endif %}
+{% endblock %}
