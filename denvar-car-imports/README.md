@@ -11,7 +11,7 @@ npm run preview    # serve the built dist/ locally
 npm run lint       # ESLint
 npm run format     # Prettier (use format:check to only verify)
 npm run validate:data  # check data/cars.json against the schema
-npm test           # unit tests (schema, formatting, card template)
+npm test           # unit tests (schema, formatting, card template, worlds, transitions)
 npm run check      # everything above plus a build; run before pushing
 ```
 
@@ -40,6 +40,7 @@ denvar-car-imports/
 │   ├── site.js             Brand, nav links, contact and showroom details (edit here)
 │   ├── worlds.js            The five worlds and the routes between them (edit here)
 │   ├── worlds-geometry.js    routePath(): curve between two nodes (unit tested)
+│   ├── transition.js          withTransition(): view transition with a plain fallback
 │   ├── util.js              escapeHTML helper for template strings
 │   ├── format.js             formatKm, formatKsh, carName
 │   ├── ambient.js             Animated canvas backgrounds
@@ -96,6 +97,17 @@ denvar-car-imports/
   (`inventory.html?origin=Japan`, the home page process section, the contact
   page); Phase 6 and 7 give the worlds their own transitions and themes.
   `inventory.html?origin=UAE` (any listed origin) opens with that filter on.
+- **Page transitions**: moving between pages fades, and the highlighted nav
+  link glides to its new place, using cross-document View Transitions. It is
+  pure CSS (`@view-transition` in `css/styles.css`), so it works in Chrome and
+  Edge 126+ and Safari 18.2+; other browsers, and visitors who prefer reduced
+  motion, just navigate normally. The build adds `blocking="render"` to the
+  entry script (see `vite.config.js`) so the JS-drawn nav exists before the
+  first paint. The inventory filter uses `withTransition()` in
+  `js/transition.js`, so cards slide into their new places instead of
+  jumping. Two gotchas: a `view-transition-name` must be unique on the page,
+  and a named element is snapshotted on its own, which drops its backdrop
+  blur, so the glass header is deliberately not named.
 - **Inventory data**: edit `data/cars.json`, then run `npm run validate:data`.
   Each car needs `id` (lowercase-with-hyphens, unique), `make`, `model`, `year`,
   `origin` (Japan, United Kingdom or UAE), `mileage` (km, whole number), `fuel`
