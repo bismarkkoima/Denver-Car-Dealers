@@ -13,5 +13,12 @@ export function withTransition(update, env = globalThis) {
     update();
     return null;
   }
-  return doc.startViewTransition(update);
+
+  // While this runs, the page-wide fade used for navigation is switched off
+  // (see css/styles.css), so only the elements that actually change animate.
+  const root = doc.documentElement;
+  root?.classList.add('vt-local');
+  const transition = doc.startViewTransition(update);
+  transition.finished?.finally(() => root?.classList.remove('vt-local'));
+  return transition;
 }
