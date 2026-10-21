@@ -10,44 +10,44 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
 
   /* ---- Color: green ramp ---- */
-  --green-950: #0B1913;
-  --green-900: #10261A;
+  --green-950: #0b1913;
+  --green-900: #10261a;
   --green-800: #163524;
-  --green-700: #204A31;
-  --green-600: #2C6B41;
+  --green-700: #204a31;
+  --green-600: #2c6b41;
 
   /* ---- Color: gold ramp ---- */
-  --gold-500: #C6A227;
-  --gold-400: #E1C158;
-  --gold-300: #EFD98A;
+  --gold-500: #c6a227;
+  --gold-400: #e1c158;
+  --gold-300: #efd98a;
 
   /* ---- Color: neutrals ---- */
-  --cream: #F4EFDE;
-  --ink: #0A130D;
+  --cream: #f4efde;
+  --ink: #0a130d;
 
   /* ---- Color: semantic roles (components should prefer these) ---- */
   --bg: var(--green-950);
   --text: var(--cream);
-  --text-muted: rgba(244,239,222,0.72);
-  --text-faint: rgba(244,239,222,0.55);
+  --text-muted: rgba(244, 239, 222, 0.72);
+  --text-faint: rgba(244, 239, 222, 0.55);
   --accent: var(--gold-500);
   --accent-hover: var(--gold-400);
   --accent-soft: var(--gold-300);
   --on-accent: var(--ink);
-  --line: rgba(244,239,222,0.14);
+  --line: rgba(244, 239, 222, 0.14);
 
   /* ---- Liquid glass: three levels of frost ---- */
-  --glass: rgba(244,239,222,0.06);
-  --glass-strong: rgba(244,239,222,0.11);
-  --glass-stronger: rgba(244,239,222,0.17);
+  --glass: rgba(244, 239, 222, 0.06);
+  --glass-strong: rgba(244, 239, 222, 0.11);
+  --glass-stronger: rgba(244, 239, 222, 0.17);
   --glass-blur: 22px;
   --glass-blur-light: 10px;
   --glass-saturate: 140%;
-  --glass-highlight: inset 0 1px 0 rgba(255,255,255,0.08);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
   /* ---- Elevation ---- */
-  --shadow: 0 20px 50px rgba(0,0,0,0.45);
-  --shadow-soft: 0 10px 30px rgba(0,0,0,0.3);
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
 
   /* ---- Typography ---- */
   --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
@@ -89,4 +89,6 @@
   --duration-slow: 600ms;
 }
 
-:root:not([data-theme="light"]) { color-scheme: dark; }
+:root:not([data-theme='light']) {
+  color-scheme: dark;
+}
