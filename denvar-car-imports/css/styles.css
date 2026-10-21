@@ -719,6 +719,17 @@ footer.site {
     navigation: auto;
   }
 
+  /* The nav stays put while the page changes, and the highlighted link glides
+     from the old page's link to the new one's. Only the desktop link row is
+     named: a view-transition-name must be unique, and the mobile menu holds a
+     second copy of every link. */
+  header.nav {
+    view-transition-name: site-nav;
+  }
+  nav.links a[aria-current='page'] {
+    view-transition-name: nav-current;
+  }
+
   ::view-transition-old(root) {
     animation: page-out var(--duration-base) var(--ease-in-out) both;
   }
