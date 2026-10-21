@@ -12,7 +12,7 @@ Stack stays light: HTML, CSS, vanilla JS first; adopt a bundler and framework on
 
 **Phase 3 — Componentization. ✅ Done.** Break nav, footer, car card, filter bar, and stat panels into reusable modules (web components or template functions) so pages stop duplicating markup.
 
-**Phase 4 — Data layer.** Move stock out of `js/stock.js` into `data/cars.json` with a schema (id, make, model, year, origin, mileage, grade, price, images, status). Add a small loader with validation.
+**Phase 4 — Data layer. ✅ Done.** Move stock out of `js/stock.js` into `data/cars.json` with a schema (id, make, model, year, origin, mileage, grade, price, images, status). Add a small loader with validation.
 
 ## The Multiverse Shell
 
