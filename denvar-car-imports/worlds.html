@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Worlds — Denvar Car Imports</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/worlds.css" />
+  </head>
+  <body>
+    <site-nav current="worlds"></site-nav>
+
+    <main>
+      <div class="page-head">
+        <div class="ambient">
+          <canvas id="canvas-worlds"></canvas>
+        </div>
+        <div class="wrap">
+          <div class="block-head">
+            <h1>Follow a car from auction to your driveway</h1>
+            <p class="lede">
+              Every car we sell starts in one of three auction markets, clears through the Port of
+              Mombasa and ends at our Nairobi showroom. Pick a stop to see what happens there.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <section class="block tight-top">
+        <div class="wrap">
+          <world-map></world-map>
+        </div>
+      </section>
+    </main>
+
+    <site-footer></site-footer>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
