@@ -709,6 +709,37 @@ footer.site {
   }
 }
 
+/* ---------- page transitions (Phase 6) ----------
+   Browsers that support cross-document View Transitions (Chrome and Edge 126+,
+   Safari 18.2+) animate between pages; others navigate normally, so this is
+   progressive enhancement and nothing depends on it. Visitors who prefer
+   reduced motion never opt in. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-old(root) {
+    animation: page-out var(--duration-base) var(--ease-in-out) both;
+  }
+  ::view-transition-new(root) {
+    animation: page-in var(--duration-slow) var(--ease-out) both;
+  }
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
