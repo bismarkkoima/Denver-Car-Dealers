@@ -3,6 +3,7 @@ export function initNav() {
   const menuBtn = document.querySelector('.menu-btn');
   const mobileMenu = document.querySelector('.mobile-menu');
   if (!menuBtn || !mobileMenu) return;
+  if (menuBtn.closest('site-nav')) return; // <site-nav> wires its own menu
 
   menuBtn.addEventListener('click', () => {
     const open = mobileMenu.classList.toggle('open');
