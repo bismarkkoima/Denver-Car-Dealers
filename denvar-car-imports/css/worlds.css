@@ -35,6 +35,10 @@
 }
 
 /* ---------- layout ---------- */
+/* The page head already ends with space, so the map section starts close to it. */
+section.block.worlds-section {
+  padding-top: var(--space-2);
+}
 world-map {
   display: block;
 }
@@ -217,6 +221,15 @@ world-map {
   }
   .world-detail {
     padding: var(--space-5);
+  }
+}
+
+/* Very narrow phones (320-360px): tighten the pills so none runs off the map. */
+@media (max-width: 380px) {
+  .world-node {
+    gap: 6px;
+    padding: 0 10px;
+    font-size: var(--text-xs);
   }
 }
 
