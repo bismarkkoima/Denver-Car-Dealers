@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Style guide — Denvar Car Imports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  .sg-section { padding: var(--space-8) 0 var(--space-6); border-top: 1px solid var(--line); }
+  .sg-section:first-of-type { border-top: none; padding-top: 150px; }
+  .sg-section h2 { font-size: var(--text-2xl); margin-bottom: var(--space-2); }
+  .sg-section > .wrap > p.note { color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-6); max-width: 60ch; line-height: 1.6; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-4); }
+  .swatch { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--line); background: var(--green-900); }
+  .swatch .chip { height: 72px; }
+  .swatch .meta { padding: var(--space-3); font-size: var(--text-xs); line-height: 1.5; color: var(--text-muted); }
+  .swatch .meta b { display: block; color: var(--text); font-weight: 600; font-size: var(--text-sm); }
+  .type-row { display: flex; align-items: baseline; gap: var(--space-5); padding: var(--space-4) 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .type-row .tag { font-size: var(--text-xs); color: var(--gold-400); min-width: 140px; }
+  .space-row { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-2) 0; font-size: var(--text-xs); color: var(--text-muted); }
+  .space-row .bar { height: 12px; background: var(--accent); border-radius: var(--radius-pill); }
+  .space-row .name { min-width: 80px; color: var(--text); }
+  .glass-stage { position: relative; padding: var(--space-7) var(--space-5); border-radius: var(--radius-lg); overflow: hidden;
+    background: radial-gradient(circle at 20% 30%, var(--green-600), transparent 45%), radial-gradient(circle at 80% 70%, var(--gold-500), transparent 40%), var(--green-900); }
+  .glass-levels { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+  .glass-levels .glass { padding: var(--space-5); font-size: var(--text-sm); }
+  .glass-levels .glass b { display: block; font-family: var(--serif); font-size: var(--text-lg); margin-bottom: var(--space-2); }
+  .radius-row { display: flex; gap: var(--space-5); flex-wrap: wrap; }
+  .radius-box { width: 110px; height: 80px; background: var(--glass-strong); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; font-size: var(--text-xs); color: var(--text-muted); }
+  .motion-demo { display: flex; gap: var(--space-5); flex-wrap: wrap; }
+  .motion-demo button { cursor: pointer; }
+  .ball-track { width: 100%; max-width: 420px; height: 44px; border-radius: var(--radius-pill); background: var(--glass); border: 1px solid var(--line); padding: 6px; }
+  .ball { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); transition: transform var(--duration-slow) var(--ease-out); }
+  .ball-track.go .ball { transform: translateX(calc(min(420px, 100vw - 2 * var(--gutter)) - 54px)); }
+  @media (max-width: 700px) { .glass-levels { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner glass">
+    <a href="index.html" class="brand">
+      <span class="mark">Denvar</span>
+      <span class="tag">CAR&nbsp;IMPORTS</span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a class="nav-cta" href="contact.html">Talk to us</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="sg-section">
+    <div class="wrap">
+      <div class="kicker">Design system</div>
+      <h2>Style guide</h2>
+      <p class="note">Everything here is rendered from <code>css/tokens.css</code>. Change a token there and this page, and the whole site, follows. Later phases (per-world theming, the multiverse hub) override these same tokens.</p>
+    </div>
+  </section>
+
+  <section class="sg-section">
+    <div class="wrap">
+      <h2>Color</h2>
+      <p class="note">A green ramp for surfaces, a gold ramp for emphasis, cream and ink for text.</p>
+      <div class="swatches" id="swatches"></div>
+    </div>
+  </section>
+
+  <section class="sg-section">
+    <div class="wrap">
+      <h2>Typography</h2>
+      <p class="note">Fraunces for headlines and numbers, Inter for body and interface text.</p>
+      <div class="type-row"><span class="tag">--text-display</span><span style="font-family:var(--serif); font-size:var(--text-display); line-height:1.05;">Import with confidence</span></div>
+      <div class="type-row"><span class="tag">--text-2xl</span><span style="font-family:var(--serif); font-size:var(--text-2xl);">From auction bid to logbook</span></div>
+      <div class="type-row"><span class="tag">--text-xl</span><span style="font-family:var(--serif); font-size:var(--text-xl);">Toyota Harrier Z</span></div>
+      <div class="type-row"><span class="tag">--text-lg</span><span style="font-size:var(--text-lg);">Duty-paid estimate, shipping and registration included.</span></div>
+      <div class="type-row"><span class="tag">--text-base</span><span style="font-size:var(--text-base);">Every listing includes mileage at auction and a grade score.</span></div>
+      <div class="type-row"><span class="tag">--text-sm</span><span style="font-size:var(--text-sm); color:var(--text-muted);">Prices update weekly with the exchange rate.</span></div>
+      <div class="type-row"><span class="tag">--text-xs</span><span style="font-size:var(--text-xs); color:var(--text-faint);">KEBS and NTSA compliant units</span></div>
+    </div>
+  </section>
+
+  <section class="sg-section">
+    <div class="wrap">
+      <h2>Spacing</h2>
+      <p class="note">A 4px-based scale. Use these instead of one-off pixel values.</p>
+      <div id="spacing"></div>
+    </div>
+  </section>
+
+  <section class="sg-section">
+    <div class="wrap">
+      <h2>Liquid glass</h2>
+      <p class="note">Three levels of frost over a colorful backdrop, so the blur is visible.</p>
+      <div class="glass-stage">
+        <div class="glass-levels">
+          <div class="glass"><b>Base</b>--glass over --glass-strong, 22px blur. Nav, cards, forms.</div>
+          <div class="glass glass-strong"><b>Strong</b>.glass-strong. For panels that must lift off a busy background.</div>
+          <div class="glass" style="background: var(--glass-stronger);"><b>Stronger</b>--glass-stronger. Modals and menus.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-section">
+    <div class="wrap">
+      <h2>Buttons</h2>
+      <p class="note">Primary for the main action, ghost for secondary.</p>
+      <div class="hero-actions" style="margin-top:0;">
+        <a class="btn-primary" href="#">Browse current stock</a>
+        <a class="btn-ghost" href="#">How importing works</a>
+        <a class="nav-cta" href="#">Talk to us</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-section">
+    <div class="wrap">
+      <h2>Radii</h2>
+      <p class="note">Corner sizes from small controls up to large glass panels and pills.</p>
+      <div class="radius-row">
+        <div class="radius-box" style="border-radius:var(--radius-sm)">--radius-sm</div>
+        <div class="radius-box" style="border-radius:var(--radius-md)">--radius-md</div>
+        <div class="radius-box" style="border-radius:var(--radius-lg)">--radius-lg</div>
+        <div class="radius-box" style="border-radius:var(--radius-pill)">--radius-pill</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sg-section">
+    <div class="wrap">
+      <h2>Motion</h2>
+      <p class="note">One easing curve and three durations. Animations are switched off for people who prefer reduced motion.</p>
+      <div class="motion-demo">
+        <button class="btn-ghost" id="play">Play slide (--duration-slow, --ease-out)</button>
+      </div>
+      <div class="ball-track" id="track" style="margin-top: var(--space-5);"><div class="ball"></div></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none; margin-top:0; padding-top:0;">
+      <span>&copy; 2026 Denvar Car Imports</span>
+      <span>Style guide</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var cs = getComputedStyle(document.documentElement);
+  function tok(n) { return cs.getPropertyValue(n).trim(); }
+
+  var colors = [
+    ['--green-950','Green 950'],['--green-900','Green 900'],['--green-800','Green 800'],['--green-700','Green 700'],['--green-600','Green 600'],
+    ['--gold-500','Gold 500'],['--gold-400','Gold 400'],['--gold-300','Gold 300'],
+    ['--cream','Cream'],['--ink','Ink'],
+    ['--line','Line'],['--glass','Glass'],['--glass-strong','Glass strong'],['--glass-stronger','Glass stronger']
+  ];
+  var sw = document.getElementById('swatches');
+  sw.innerHTML = colors.map(function (c) {
+    return '<div class="swatch"><div class="chip" style="background:var(' + c[0] + ');"></div>' +
+           '<div class="meta"><b>' + c[1] + '</b>' + c[0] + '<br>' + tok(c[0]) + '</div></div>';
+  }).join('');
+
+  var spaces = ['--space-1','--space-2','--space-3','--space-4','--space-5','--space-6','--space-7','--space-8','--space-9'];
+  document.getElementById('spacing').innerHTML = spaces.map(function (s) {
+    return '<div class="space-row"><span class="name">' + s + '</span><div class="bar" style="width:var(' + s + ')"></div><span>' + tok(s) + '</span></div>';
+  }).join('');
+
+  var track = document.getElementById('track');
+  document.getElementById('play').addEventListener('click', function () {
+    track.classList.remove('go');
+    void track.offsetWidth;
+    track.classList.add('go');
+  });
+})();
+</script>
+</body>
+</html>
