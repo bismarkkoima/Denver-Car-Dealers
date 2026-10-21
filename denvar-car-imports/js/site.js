@@ -24,4 +24,6 @@ export const SERVICE_LINKS = [
 export const CONTACT = {
   phone: '+254 7xx xxx xxx',
   email: 'hello@denvarimports.ke',
+  showroom: "Lang'ata Road, Nairobi",
+  hours: 'Mon – Sat, 8:00 – 18:00',
 };
