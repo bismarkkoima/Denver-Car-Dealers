@@ -29,17 +29,24 @@ denvar-car-imports/
 │   ├── tokens.css         Design tokens: colors, glass, type, spacing, radii, motion
 │   └── styles.css         Layout, components and breakpoints (reads tokens.css)
 ├── js/
-│   ├── main.js            Entry module; imports and runs the modules below
-│   ├── nav.js              Mobile menu toggle
-│   ├── ambient.js           Animated canvas backgrounds
-│   ├── inventory.js          Car card render + origin filter
-│   ├── stock.js               Placeholder stock data
-│   └── contact-form.js         Demo enquiry form behavior
+│   ├── main.js            Entry module; registers components, runs page behavior
+│   ├── site.js             Brand, nav links, contact placeholders (edit here)
+│   ├── util.js              escapeHTML helper for template strings
+│   ├── stock.js              Placeholder stock (the featured flag drives the home page)
+│   ├── ambient.js             Animated canvas backgrounds
+│   ├── contact-form.js         Demo enquiry form behavior
+│   └── components/             Reusable custom elements
+│       ├── site-nav.js          <site-nav current="inventory">
+│       ├── site-footer.js        <site-footer>
+│       ├── car-card.js            carCardHTML() and <car-grid [featured] cta="reserve|view">
+│       ├── origin-filter.js        <origin-filter for="grid-id">
+│       ├── stat-panel.js            <stat-panel> with <stat-item value="...">label</stat-item>
+│       └── index.js                 Registers every component
 ├── assets/               Empty — drop real photos/logo here if you add them
 ├── package.json          Scripts and dev dependencies
 ├── vite.config.js         Multi-page build (one entry per HTML file)
 ├── eslint.config.js        ESLint flat config
-└── .prettierrc.json         Prettier config (HTML is ignored until Phase 3)
+└── .prettierrc.json         Prettier config
 ```
 
 ## Notes
@@ -53,9 +60,14 @@ denvar-car-imports/
   To add it to another section: wrap that section in `<div class="ambient">`
   with a `<canvas id="canvas-yourname">` inside, then call
   `initAmbient('canvas-yourname')` in `js/main.js` (it isn't automatic).
+- **Components**: shared UI is written once as light-DOM custom elements in
+  `js/components/` and used on every page, e.g. `<site-nav current="about">`
+  and `<site-footer>`. They render with JavaScript, so the nav and footer
+  appear once `main.js` loads; Phase 18 (SEO) revisits pre-rendering them.
+  Brand name, nav links and the placeholder phone/email live in `js/site.js`.
 - **Inventory data**: currently a plain JS array in `js/stock.js`. Swap it for
-  a fetch to a real backend/CMS when you have one — the render function in
-  `js/inventory.js` stays the same. Phase 4 moves this to `data/cars.json`.
+  a fetch to a real backend/CMS when you have one — `<car-grid>` and
+  `<origin-filter>` read from it. Phase 4 moves this to `data/cars.json`.
 - **Colors / fonts / spacing / motion**: everything routes through CSS custom
   properties in `css/tokens.css` (`--green-*`, `--gold-*`, `--space-*`,
   `--radius-*`, `--glass-*`, `--serif`, `--sans`). Every page loads
