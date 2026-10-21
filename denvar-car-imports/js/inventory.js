@@ -32,7 +32,7 @@ function carCard(item, idx) {
 // Renders the grid and wires the origin filter (inventory.html only).
 export function initInventory() {
   const grid = document.getElementById('inv-grid');
-  if (!grid) return;
+  if (!grid || grid.localName === 'car-grid') return; // <car-grid> renders itself
   grid.innerHTML = STOCK.map(carCard).join('');
 
   const filterBtns = document.querySelectorAll('.filter-bar button');
