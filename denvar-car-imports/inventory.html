@@ -1,41 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Inventory — Denvar Car Imports</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css">
-<link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Inventory — Denvar Car Imports</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <site-nav current="inventory"></site-nav>
 
-<site-nav current="inventory"></site-nav>
-
-<main>
-  <div style="position:relative; padding-top: 130px;">
-    <div class="ambient" style="position:absolute; inset:0; height: 420px;"><canvas id="canvas-inv"></canvas></div>
-    <div class="wrap" style="position:relative; z-index:1;">
-      <div class="block-head">
-        <div class="kicker">Current stock</div>
-        <h2>18 vehicles ready for reservation</h2>
-        <p class="lede">Every listing includes mileage at auction, grade score, and landed-cost estimate. Prices update weekly with the exchange rate.</p>
+    <main>
+      <div style="position: relative; padding-top: 130px">
+        <div class="ambient" style="position: absolute; inset: 0; height: 420px">
+          <canvas id="canvas-inv"></canvas>
+        </div>
+        <div class="wrap" style="position: relative; z-index: 1">
+          <div class="block-head">
+            <div class="kicker">Current stock</div>
+            <h2>18 vehicles ready for reservation</h2>
+            <p class="lede">
+              Every listing includes mileage at auction, grade score, and landed-cost estimate.
+              Prices update weekly with the exchange rate.
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <section class="block" style="padding-top: 0;">
-    <div class="wrap">
-      <origin-filter for="inv-grid"></origin-filter>
-      <car-grid class="inv-grid" id="inv-grid" cta="reserve"></car-grid>
-    </div>
-  </section>
-</main>
+      <section class="block" style="padding-top: 0">
+        <div class="wrap">
+          <origin-filter for="inv-grid"></origin-filter>
+          <car-grid class="inv-grid" id="inv-grid" cta="reserve"></car-grid>
+        </div>
+      </section>
+    </main>
 
-<site-footer></site-footer>
+    <site-footer></site-footer>
 
-<script type="module" src="js/main.js"></script>
-</body>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>
