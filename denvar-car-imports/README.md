@@ -23,6 +23,7 @@ works on GitHub Pages, Netlify, or inside a subfolder.
 ```
 denvar-car-imports/
 ├── index.html        Home
+├── worlds.html        The multiverse hub: constellation map of the car's journey
 ├── inventory.html     Inventory (car grid + origin filter)
 ├── about.html          About / company story
 ├── contact.html         Contact form + info
@@ -32,10 +33,13 @@ denvar-car-imports/
 │   └── cars.json          The stock: one record per car (see schema below)
 ├── css/
 │   ├── tokens.css         Design tokens: colors, glass, type, spacing, radii, motion
-│   └── styles.css         Layout, components and breakpoints (reads tokens.css)
+│   ├── styles.css         Layout, components and breakpoints (reads tokens.css)
+│   └── worlds.css         Worlds hub only: map, nodes, routes, detail panel
 ├── js/
 │   ├── main.js            Entry module; registers components, runs page behavior
-│   ├── site.js             Brand, nav links, contact placeholders (edit here)
+│   ├── site.js             Brand, nav links, contact and showroom details (edit here)
+│   ├── worlds.js            The five worlds and the routes between them (edit here)
+│   ├── worlds-geometry.js    routePath(): curve between two nodes (unit tested)
 │   ├── util.js              escapeHTML helper for template strings
 │   ├── format.js             formatKm, formatKsh, carName
 │   ├── ambient.js             Animated canvas backgrounds
@@ -50,6 +54,7 @@ denvar-car-imports/
 │       ├── car-card.js             <car-grid [featured] cta="reserve|view">
 │       ├── origin-filter.js        <origin-filter for="grid-id">
 │       ├── stat-panel.js            <stat-panel> with <stat-item value="...">label</stat-item>
+│       ├── world-map.js              <world-map>: the constellation and its detail panel
 │       └── index.js                 Registers every component
 ├── scripts/
 │   └── validate-data.js    Used by npm run validate:data
@@ -77,6 +82,20 @@ denvar-car-imports/
   and `<site-footer>`. They render with JavaScript, so the nav and footer
   appear once `main.js` loads; Phase 18 (SEO) revisits pre-rendering them.
   Brand name, nav links and the placeholder phone/email live in `js/site.js`.
+- **Worlds (the multiverse)**: a car's journey is five stops, each a "world":
+  three auction markets (Japan, United Kingdom, UAE), the Port of Mombasa and
+  the Nairobi showroom. They are defined in `js/worlds.js` (name, blurb, map
+  position, route order, where "Enter world" goes) and drawn by `<world-map>`
+  on `worlds.html`. Nodes are real buttons, so the map works by keyboard and
+  screen reader; the selected world is kept in the URL hash, so
+  `worlds.html#mombasa` links straight to one. Origin worlds show live numbers
+  from `data/cars.json` (cars in stock, lowest price). Positions are percentages
+  of the map; keep `x` between 14 and 80 so pills are not clipped on phones (a
+  test enforces it). Each origin in the data schema must have a world, also
+  enforced by a test. "Enter world" currently goes to existing pages
+  (`inventory.html?origin=Japan`, the home page process section, the contact
+  page); Phase 6 and 7 give the worlds their own transitions and themes.
+  `inventory.html?origin=UAE` (any listed origin) opens with that filter on.
 - **Inventory data**: edit `data/cars.json`, then run `npm run validate:data`.
   Each car needs `id` (lowercase-with-hyphens, unique), `make`, `model`, `year`,
   `origin` (Japan, United Kingdom or UAE), `mileage` (km, whole number), `fuel`
@@ -98,3 +117,12 @@ denvar-car-imports/
 - **Fonts**: Fraunces (headlines) + Inter (body/UI), loaded from Google Fonts.
 - All copy (prices, addresses, phone numbers) is placeholder — replace before
   going live.
+
+## Known issues (for Phase 17, the accessibility and responsive pass)
+
+- At 320px wide (the smallest phones) the page scrolls sideways by about 19px
+  on every page, because the nav's menu button runs past the edge. It is fine
+  at 360px and up.
+- At 320px the contact form is wider than the screen (about 58px over).
+- The worlds map was checked in a real browser at 320, 360, 390, 820 and
+  1280px: no overlapping pills, none clipped, tap targets at least 44px tall.
