@@ -18,6 +18,7 @@ export const STOCK = [
   },
   {
     name: 'Range Rover Evoque',
+    featured: true,
     origin: 'United Kingdom',
     year: 2020,
     km: '39,200',
@@ -26,6 +27,7 @@ export const STOCK = [
   },
   {
     name: 'Toyota Harrier Z',
+    featured: true,
     origin: 'Japan',
     year: 2021,
     km: '34,200',
@@ -50,6 +52,7 @@ export const STOCK = [
   },
   {
     name: 'Mazda CX-5 Field Journey',
+    featured: true,
     origin: 'Japan',
     year: 2022,
     km: '19,600',
