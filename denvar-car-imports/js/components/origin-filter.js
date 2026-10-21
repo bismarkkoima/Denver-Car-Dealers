@@ -1,5 +1,6 @@
 import { loadCars, isListed } from '../data/cars.js';
 import { escapeHTML } from '../util.js';
+import { withTransition } from '../transition.js';
 
 // <origin-filter for="inv-grid"></origin-filter>
 // Builds one button per origin found in the listed cars, plus "All origins",
@@ -19,7 +20,7 @@ class OriginFilter extends HTMLElement {
       this.querySelectorAll('button[data-filter]').forEach((b) =>
         b.setAttribute('aria-pressed', String(b === btn))
       );
-      this.#apply(btn.dataset.filter);
+      this.#apply(btn.dataset.filter, { animate: true });
     });
 
     this.rendered = this.#render();
@@ -29,12 +30,22 @@ class OriginFilter extends HTMLElement {
     return document.getElementById(this.getAttribute('for'));
   }
 
-  #apply(filter) {
-    this.#grid()
-      ?.querySelectorAll('.car-card')
-      .forEach((card) => {
+  #apply(filter, { animate = false } = {}) {
+    const cards = [...(this.#grid()?.querySelectorAll('.car-card') ?? [])];
+    const update = () => {
+      for (const card of cards) {
         card.hidden = filter !== 'all' && card.dataset.origin !== filter;
-      });
+      }
+    };
+    if (!animate) return update();
+
+    // Give every card a unique name so the ones that stay slide to their new
+    // place while the others fade. Names only matter during the transition.
+    for (const card of cards) card.style.viewTransitionName = `card-${card.dataset.id}`;
+    const clear = () => cards.forEach((card) => (card.style.viewTransitionName = ''));
+    const transition = withTransition(update);
+    if (transition) transition.finished.finally(clear);
+    else clear();
   }
 
   async #render() {
