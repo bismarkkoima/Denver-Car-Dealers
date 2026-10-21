@@ -10,6 +10,7 @@ export const BRAND = {
 
 export const NAV_LINKS = [
   { key: 'home', href: 'index.html', label: 'Home' },
+  { key: 'worlds', href: 'worlds.html', label: 'Worlds' },
   { key: 'inventory', href: 'inventory.html', label: 'Inventory' },
   { key: 'about', href: 'about.html', label: 'About' },
   { key: 'contact', href: 'contact.html', label: 'Contact' },
