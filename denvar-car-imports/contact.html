@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact — Denvar Car Imports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner glass">
+    <a href="index.html" class="brand">
+      <span class="mark">Denvar</span>
+      <span class="tag">CAR&nbsp;IMPORTS</span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+    <a class="nav-cta" href="contact.html">Talk to us</a>
+    <button class="menu-btn" aria-expanded="false" aria-label="Menu">&#9776;</button>
+    <div class="mobile-menu glass">
+      <a href="index.html">Home</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="block" style="padding-top: 150px;">
+    <div class="wrap">
+      <div class="block-head">
+        <div class="kicker">Get in touch</div>
+        <h2>Tell us the car you're after</h2>
+        <p class="lede">Share a make, model and budget and we'll come back with real auction listings within 48 hours — not a generic price list.</p>
+      </div>
+      <div class="contact-grid">
+        <form class="form-card glass" onsubmit="return false;">
+          <div class="field"><label for="name">Full name</label><input id="name" type="text" placeholder="Your name"></div>
+          <div class="field"><label for="phone">Phone or WhatsApp</label><input id="phone" type="tel" placeholder="07xx xxx xxx"></div>
+          <div class="field"><label for="model">Make &amp; model you want</label><input id="model" type="text" placeholder="e.g. Toyota Land Cruiser Prado"></div>
+          <div class="field"><label for="budget">Budget range (KSh)</label>
+            <select id="budget">
+              <option>Under 2M</option>
+              <option>2M – 4M</option>
+              <option>4M – 7M</option>
+              <option>7M+</option>
+            </select>
+          </div>
+          <div class="field"><label for="msg">Anything else we should know</label><textarea id="msg" placeholder="Colour preference, timeline, trade-in..."></textarea></div>
+          <button class="btn-primary" type="submit" style="width:100%; margin-top:6px;">Send enquiry</button>
+        </form>
+        <div class="info-card glass">
+          <div class="contact-info-item"><div class="lbl">Showroom</div><div class="val">Lang'ata Road, Nairobi</div></div>
+          <div class="contact-info-item"><div class="lbl">Clearing desk</div><div class="val">Moi Avenue, Mombasa</div></div>
+          <div class="contact-info-item"><div class="lbl">Phone</div><div class="val">+254 7xx xxx xxx</div></div>
+          <div class="contact-info-item"><div class="lbl">Email</div><div class="val">hello@denvarimports.ke</div></div>
+          <div class="contact-info-item"><div class="lbl">Hours</div><div class="val">Mon – Sat, 8:00 – 18:00</div></div>
+          <svg class="route-svg" viewBox="0 0 400 120">
+            <path d="M20 90 Q120 20 200 55 T380 30" fill="none" stroke="#C6A227" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.7"/>
+            <circle cx="20" cy="90" r="4" fill="#E1C158"/>
+            <circle cx="380" cy="30" r="4" fill="#E1C158"/>
+            <text x="10" y="108" fill="#F4EFDE" font-size="11" font-family="Inter, sans-serif" opacity="0.7">Mombasa</text>
+            <text x="345" y="20" fill="#F4EFDE" font-size="11" font-family="Inter, sans-serif" opacity="0.7">Nairobi</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom: 12px;"><span class="mark">Denvar</span></div>
+        <p style="font-size:0.88rem; color:rgba(244,239,222,0.7); line-height:1.6; max-width:32ch;">Sourcing, shipping and clearing vehicles into Kenya since 2016.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul><li><a href="index.html">Home</a></li><li><a href="inventory.html">Inventory</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul><li><a href="about.html">Auction sourcing</a></li><li><a href="about.html">Duty &amp; clearing</a></li><li><a href="about.html">NTSA registration</a></li></ul>
+      </div>
+      <div>
+        <h4>Reach us</h4>
+        <ul><li><a href="contact.html">+254 7xx xxx xxx</a></li><li><a href="contact.html">hello@denvarimports.ke</a></li></ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Denvar Car Imports</span>
+      <span>Nairobi &amp; Mombasa, Kenya</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
