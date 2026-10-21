@@ -1,64 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Contact — Denvar Car Imports</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css">
-<link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Contact — Denvar Car Imports</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <site-nav current="contact"></site-nav>
 
-<site-nav current="contact"></site-nav>
-
-<main>
-  <section class="block" style="padding-top: 150px;">
-    <div class="wrap">
-      <div class="block-head">
-        <div class="kicker">Get in touch</div>
-        <h2>Tell us the car you're after</h2>
-        <p class="lede">Share a make, model and budget and we'll come back with real auction listings within 48 hours — not a generic price list.</p>
-      </div>
-      <div class="contact-grid">
-        <form class="form-card glass" onsubmit="return false;">
-          <div class="field"><label for="name">Full name</label><input id="name" type="text" placeholder="Your name"></div>
-          <div class="field"><label for="phone">Phone or WhatsApp</label><input id="phone" type="tel" placeholder="07xx xxx xxx"></div>
-          <div class="field"><label for="model">Make &amp; model you want</label><input id="model" type="text" placeholder="e.g. Toyota Land Cruiser Prado"></div>
-          <div class="field"><label for="budget">Budget range (KSh)</label>
-            <select id="budget">
-              <option>Under 2M</option>
-              <option>2M – 4M</option>
-              <option>4M – 7M</option>
-              <option>7M+</option>
-            </select>
+    <main>
+      <section class="block" style="padding-top: 150px">
+        <div class="wrap">
+          <div class="block-head">
+            <div class="kicker">Get in touch</div>
+            <h2>Tell us the car you're after</h2>
+            <p class="lede">
+              Share a make, model and budget and we'll come back with real auction listings within
+              48 hours — not a generic price list.
+            </p>
           </div>
-          <div class="field"><label for="msg">Anything else we should know</label><textarea id="msg" placeholder="Colour preference, timeline, trade-in..."></textarea></div>
-          <button class="btn-primary" type="submit" style="width:100%; margin-top:6px;">Send enquiry</button>
-        </form>
-        <div class="info-card glass">
-          <div class="contact-info-item"><div class="lbl">Showroom</div><div class="val">Lang'ata Road, Nairobi</div></div>
-          <div class="contact-info-item"><div class="lbl">Clearing desk</div><div class="val">Moi Avenue, Mombasa</div></div>
-          <div class="contact-info-item"><div class="lbl">Phone</div><div class="val">+254 7xx xxx xxx</div></div>
-          <div class="contact-info-item"><div class="lbl">Email</div><div class="val">hello@denvarimports.ke</div></div>
-          <div class="contact-info-item"><div class="lbl">Hours</div><div class="val">Mon – Sat, 8:00 – 18:00</div></div>
-          <svg class="route-svg" viewBox="0 0 400 120">
-            <path d="M20 90 Q120 20 200 55 T380 30" fill="none" stroke="#C6A227" stroke-width="1.5" stroke-dasharray="4 5" opacity="0.7"/>
-            <circle cx="20" cy="90" r="4" fill="#E1C158"/>
-            <circle cx="380" cy="30" r="4" fill="#E1C158"/>
-            <text x="10" y="108" fill="#F4EFDE" font-size="11" font-family="Inter, sans-serif" opacity="0.7">Mombasa</text>
-            <text x="345" y="20" fill="#F4EFDE" font-size="11" font-family="Inter, sans-serif" opacity="0.7">Nairobi</text>
-          </svg>
+          <div class="contact-grid">
+            <form class="form-card glass" onsubmit="return false;">
+              <div class="field">
+                <label for="name">Full name</label
+                ><input id="name" type="text" placeholder="Your name" />
+              </div>
+              <div class="field">
+                <label for="phone">Phone or WhatsApp</label
+                ><input id="phone" type="tel" placeholder="07xx xxx xxx" />
+              </div>
+              <div class="field">
+                <label for="model">Make &amp; model you want</label
+                ><input id="model" type="text" placeholder="e.g. Toyota Land Cruiser Prado" />
+              </div>
+              <div class="field">
+                <label for="budget">Budget range (KSh)</label>
+                <select id="budget">
+                  <option>Under 2M</option>
+                  <option>2M – 4M</option>
+                  <option>4M – 7M</option>
+                  <option>7M+</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="msg">Anything else we should know</label
+                ><textarea
+                  id="msg"
+                  placeholder="Colour preference, timeline, trade-in..."
+                ></textarea>
+              </div>
+              <button class="btn-primary" type="submit" style="width: 100%; margin-top: 6px">
+                Send enquiry
+              </button>
+            </form>
+            <div class="info-card glass">
+              <div class="contact-info-item">
+                <div class="lbl">Showroom</div>
+                <div class="val">Lang'ata Road, Nairobi</div>
+              </div>
+              <div class="contact-info-item">
+                <div class="lbl">Clearing desk</div>
+                <div class="val">Moi Avenue, Mombasa</div>
+              </div>
+              <div class="contact-info-item">
+                <div class="lbl">Phone</div>
+                <div class="val">+254 7xx xxx xxx</div>
+              </div>
+              <div class="contact-info-item">
+                <div class="lbl">Email</div>
+                <div class="val">hello@denvarimports.ke</div>
+              </div>
+              <div class="contact-info-item">
+                <div class="lbl">Hours</div>
+                <div class="val">Mon – Sat, 8:00 – 18:00</div>
+              </div>
+              <svg class="route-svg" viewBox="0 0 400 120">
+                <path
+                  d="M20 90 Q120 20 200 55 T380 30"
+                  fill="none"
+                  stroke="#C6A227"
+                  stroke-width="1.5"
+                  stroke-dasharray="4 5"
+                  opacity="0.7"
+                />
+                <circle cx="20" cy="90" r="4" fill="#E1C158" />
+                <circle cx="380" cy="30" r="4" fill="#E1C158" />
+                <text
+                  x="10"
+                  y="108"
+                  fill="#F4EFDE"
+                  font-size="11"
+                  font-family="Inter, sans-serif"
+                  opacity="0.7"
+                >
+                  Mombasa
+                </text>
+                <text
+                  x="345"
+                  y="20"
+                  fill="#F4EFDE"
+                  font-size="11"
+                  font-family="Inter, sans-serif"
+                  opacity="0.7"
+                >
+                  Nairobi
+                </text>
+              </svg>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
-</main>
+      </section>
+    </main>
 
-<site-footer></site-footer>
+    <site-footer></site-footer>
 
-<script type="module" src="js/main.js"></script>
-</body>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>
