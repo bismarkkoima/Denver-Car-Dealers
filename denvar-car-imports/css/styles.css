@@ -39,6 +39,36 @@ p {
   margin: 0;
 }
 
+/* ---------- custom elements (see js/components/) ---------- */
+/* Wrapper components add no box of their own, so the sticky nav and the grid
+   layouts behave exactly as if the markup were written inline. */
+site-nav,
+site-footer,
+stat-panel {
+  display: contents;
+}
+origin-filter {
+  display: block;
+}
+/* Reserve room until the element upgrades, to avoid a layout jump. */
+site-nav:not(:defined) {
+  display: block;
+  min-height: 78px;
+}
+site-footer:not(:defined) {
+  display: block;
+  min-height: 320px;
+}
+.footer-brand {
+  margin-bottom: var(--space-3);
+}
+.footer-blurb {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 32ch;
+}
+
 .wrap {
   max-width: 1180px;
   margin: 0 auto;
