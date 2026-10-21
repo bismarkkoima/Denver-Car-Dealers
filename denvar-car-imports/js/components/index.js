@@ -4,3 +4,4 @@ import './site-footer.js';
 import './car-card.js';
 import './origin-filter.js';
 import './stat-panel.js';
+import './world-map.js';
