@@ -21,7 +21,9 @@ test('every world has the text and fields the map needs', () => {
 
 test('nodes sit inside the map with room for their labels, and never on top of each other', () => {
   for (const { id, pos } of WORLDS) {
-    assert.ok(pos.x >= 10 && pos.x <= 90, `${id} x=${pos.x}`);
+    // Pills are centred on their point and up to ~115px wide, so on a 390px
+    // phone (map ~334px) anything past x=80 or under x=14 gets clipped.
+    assert.ok(pos.x >= 14 && pos.x <= 80, `${id} x=${pos.x}`);
     assert.ok(pos.y >= 10 && pos.y <= 90, `${id} y=${pos.y}`);
   }
   for (let i = 0; i < WORLDS.length; i++) {
