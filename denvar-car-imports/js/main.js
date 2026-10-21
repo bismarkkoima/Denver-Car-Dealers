@@ -1,5 +1,6 @@
 // Entry point. Each init is a no-op on pages that don't have its markup,
 // so every page loads this one module.
+import './components/index.js';
 import { initNav } from './nav.js';
 import { initAmbient } from './ambient.js';
 import { initInventory } from './inventory.js';
