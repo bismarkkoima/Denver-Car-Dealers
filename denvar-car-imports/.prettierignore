@@ -1,5 +1,3 @@
 dist/
 node_modules/
 package-lock.json
-# HTML is hand-formatted for now; re-enable once pages are componentized (Phase 3)
-*.html
