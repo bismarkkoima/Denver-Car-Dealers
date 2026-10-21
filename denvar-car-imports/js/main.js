@@ -8,4 +8,5 @@ import { initContactForm } from './contact-form.js';
 // Module scripts are deferred, so the DOM is already parsed here.
 initAmbient('canvas-home');
 initAmbient('canvas-inv');
+initAmbient('canvas-worlds');
 initContactForm();
