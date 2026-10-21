@@ -12,8 +12,11 @@ denvar-car-imports/
 ├── inventory.html     Inventory (car grid + origin filter)
 ├── about.html          About / company story
 ├── contact.html         Contact form + info
+├── styleguide.html       Living style guide rendered from the tokens
+├── ROADMAP.md             20-phase plan for the multiverse redesign
 ├── css/
-│   └── styles.css       All styling: tokens, layout, components, breakpoints
+│   ├── tokens.css         Design tokens: colors, glass, type, spacing, radii, motion
+│   └── styles.css         Layout, components and breakpoints (reads tokens.css)
 ├── js/
 │   └── main.js            Mobile menu toggle, ambient canvas backgrounds,
 │                            inventory data + render + filtering
@@ -35,9 +38,11 @@ denvar-car-imports/
 - **Inventory data**: currently a plain JS array (`DENVAR_STOCK`) near the top
   of `main.js`. Swap it for a fetch to a real backend/CMS when you have one —
   the render function (`denvarCarCard()`) stays the same.
-- **Colors / fonts**: everything routes through CSS custom properties at the
-  top of `styles.css` (`--green-*`, `--gold-*`, `--serif`, `--sans`) so you
-  can retheme without touching markup.
+- **Colors / fonts / spacing / motion**: everything routes through CSS custom
+  properties in `css/tokens.css` (`--green-*`, `--gold-*`, `--space-*`,
+  `--radius-*`, `--glass-*`, `--serif`, `--sans`). Every page loads
+  `tokens.css` before `styles.css`. Retheme without touching markup, and see
+  every token rendered in `styleguide.html`.
 - **Fonts**: Fraunces (headlines) + Inter (body/UI), loaded from Google Fonts.
 - All copy (prices, addresses, phone numbers) is placeholder — replace before
   going live.
