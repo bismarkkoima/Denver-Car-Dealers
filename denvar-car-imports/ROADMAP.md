@@ -18,7 +18,7 @@ Stack stays light: HTML, CSS, vanilla JS first; adopt a bundler and framework on
 
 **Phase 5 — Universe concept & map. ✅ Done.** Define the "worlds": Japan, UK, UAE, Port of Mombasa, Showroom. Build a hub page: a glass constellation map where each world is a node you enter.
 
-**Phase 6 — Seamless page transitions.** View Transitions API with a fallback, so moving between worlds morphs shared elements (car card to detail, nav pill to new page) rather than hard-reloading.
+**Phase 6 — Seamless page transitions. ✅ Done.** View Transitions API with a fallback, so moving between worlds morphs shared elements (car card to detail, nav pill to new page) rather than hard-reloading.
 
 **Phase 7 — Per-world theming.** Each world overrides tokens: Japan (cool jade, neon accent), UK (deep moss, brass), UAE (sand and gold), Mombasa (ocean teal). Theme switches live during transitions.
 
