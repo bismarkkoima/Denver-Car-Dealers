@@ -50,3 +50,27 @@ test('still runs the update when there is no document or matchMedia at all', () 
   withTransition(() => ran++, {});
   assert.equal(ran, 1);
 });
+
+test('marks the page as running a local transition until it finishes', async () => {
+  const classes = new Set();
+  let finish;
+  const finished = new Promise((resolve) => (finish = resolve));
+  const env = {
+    document: {
+      documentElement: {
+        classList: { add: (c) => classes.add(c), remove: (c) => classes.delete(c) },
+      },
+      startViewTransition: (fn) => {
+        fn();
+        return { finished };
+      },
+    },
+    matchMedia: matchMedia(false),
+  };
+  withTransition(() => {}, env);
+  assert.ok(classes.has('vt-local'));
+  finish();
+  await finished;
+  await Promise.resolve();
+  assert.ok(!classes.has('vt-local'));
+});
