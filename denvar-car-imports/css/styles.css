@@ -719,35 +719,50 @@ footer.site {
     navigation: auto;
   }
 
-  /* The nav stays put while the page changes, and the highlighted link glides
-     from the old page's link to the new one's. Only the desktop link row is
-     named: a view-transition-name must be unique, and the mobile menu holds a
-     second copy of every link. */
-  header.nav {
-    view-transition-name: site-nav;
-  }
+  /* The highlighted nav link glides from the old page's link to the new
+     one's. Only the desktop link row is named: a view-transition-name must be
+     unique, and the mobile menu holds a second copy of every link. The header
+     itself is deliberately not named: a named element is snapshotted on its
+     own, which drops its backdrop blur and lets page text show through. */
   nav.links a[aria-current='page'] {
     view-transition-name: nav-current;
   }
 
-  ::view-transition-old(root) {
+  /* The page-wide fade is for moving between pages. In-page transitions (the
+     inventory filter) add .vt-local to <html> and animate only what changes. */
+  :root:not(.vt-local)::view-transition-old(root) {
     animation: page-out var(--duration-base) var(--ease-in-out) both;
   }
-  ::view-transition-new(root) {
+  :root:not(.vt-local)::view-transition-new(root) {
     animation: page-in var(--duration-slow) var(--ease-out) both;
+  }
+  /* No fade, and the old snapshot is hidden: the browser blends the two with
+     plus-lighter, which would wash the page out if both stayed visible. */
+  .vt-local::view-transition-old(root) {
+    animation: none;
+    opacity: 0;
+  }
+  .vt-local::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  /* Elements that move during a transition (cards reflowing) ease into place. */
+  ::view-transition-group(*) {
+    animation-duration: var(--duration-slow);
+    animation-timing-function: var(--ease-out);
   }
 }
 
+/* Fade only: moving the page would also move the sticky nav inside it. */
 @keyframes page-out {
   to {
     opacity: 0;
-    transform: translateY(-6px);
   }
 }
 @keyframes page-in {
   from {
     opacity: 0;
-    transform: translateY(14px);
   }
 }
 
