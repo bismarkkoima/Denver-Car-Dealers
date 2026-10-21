@@ -19,8 +19,8 @@ export default [
     },
   },
   {
-    // Node-side config files
-    files: ['*.config.js'],
+    // Node-side files: build config, scripts and tests
+    files: ['*.config.js', 'scripts/**/*.js', 'tests/**/*.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
