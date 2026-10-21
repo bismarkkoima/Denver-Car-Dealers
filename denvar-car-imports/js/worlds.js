@@ -73,7 +73,7 @@ export const WORLDS = [
     kind: 'showroom',
     name: 'Nairobi showroom',
     short: 'Showroom',
-    pos: { x: 84, y: 24 },
+    pos: { x: 78, y: 24 },
     blurb:
       "Collect your car here once it's registered with NTSA, or have it delivered. Walk-ins are welcome during opening hours.",
     facts: [CONTACT.showroom, CONTACT.hours],
