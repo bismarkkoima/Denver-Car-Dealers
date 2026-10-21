@@ -1,77 +1,120 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Denvar Car Imports — Import your next car with confidence</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css">
-<link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Denvar Car Imports — Import your next car with confidence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <site-nav current="home"></site-nav>
 
-<site-nav current="home"></site-nav>
-
-<main>
-  <div class="hero">
-    <div class="ambient"><canvas id="canvas-home"></canvas></div>
-    <div class="wrap hero-content">
-      <div class="eyebrow-row"><span class="dot"></span> Nairobi &middot; Mombasa &middot; sourcing from Japan, UK &amp; UAE</div>
-      <h1 class="display">Import your next car with the paperwork already figured out.</h1>
-      <p class="hero-sub">Denvar sources inspected, low-mileage vehicles from trusted auctions abroad and carries every unit through duty, clearing and registration — so what lands in your driveway is the car you agreed to, at the price you agreed to.</p>
-      <div class="hero-actions">
-        <a class="btn-primary" href="inventory.html">Browse current stock</a>
-        <a class="btn-ghost" href="about.html">How importing works</a>
+    <main>
+      <div class="hero">
+        <div class="ambient"><canvas id="canvas-home"></canvas></div>
+        <div class="wrap hero-content">
+          <div class="eyebrow-row">
+            <span class="dot"></span> Nairobi &middot; Mombasa &middot; sourcing from Japan, UK
+            &amp; UAE
+          </div>
+          <h1 class="display">Import your next car with the paperwork already figured out.</h1>
+          <p class="hero-sub">
+            Denvar sources inspected, low-mileage vehicles from trusted auctions abroad and carries
+            every unit through duty, clearing and registration — so what lands in your driveway is
+            the car you agreed to, at the price you agreed to.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="inventory.html">Browse current stock</a>
+            <a class="btn-ghost" href="about.html">How importing works</a>
+          </div>
+          <stat-panel>
+            <stat-item value="1,240+">vehicles landed since 2016</stat-item>
+            <stat-item value="18 days">average port-to-Nairobi time</stat-item>
+            <stat-item value="100%">KEBS &amp; NTSA compliant units</stat-item>
+          </stat-panel>
+        </div>
       </div>
-      <stat-panel>
-        <stat-item value="1,240+">vehicles landed since 2016</stat-item>
-        <stat-item value="18 days">average port-to-Nairobi time</stat-item>
-        <stat-item value="100%">KEBS &amp; NTSA compliant units</stat-item>
-      </stat-panel>
-    </div>
-  </div>
 
-  <section class="block">
-    <div class="wrap">
-      <div class="block-head">
-        <div class="kicker">Featured this week</div>
-        <h2>Fresh off the auction floor</h2>
-        <p class="lede">A rotating shortlist from our latest Japan and UK consignments. Full auction sheets and inspection photos are shared before you commit.</p>
-      </div>
-      <car-grid class="grid-3" featured cta="view"></car-grid>
-    </div>
-  </section>
+      <section class="block">
+        <div class="wrap">
+          <div class="block-head">
+            <div class="kicker">Featured this week</div>
+            <h2>Fresh off the auction floor</h2>
+            <p class="lede">
+              A rotating shortlist from our latest Japan and UK consignments. Full auction sheets
+              and inspection photos are shared before you commit.
+            </p>
+          </div>
+          <car-grid class="grid-3" featured cta="view"></car-grid>
+        </div>
+      </section>
 
-  <section class="block">
-    <div class="wrap">
-      <div class="block-head">
-        <div class="kicker">The process</div>
-        <h2>From auction bid to your logbook</h2>
-        <p class="lede">Four stages, one point of contact. You get a WhatsApp update at every stage — no chasing agents.</p>
-      </div>
-      <div class="steps">
-        <div class="step glass"><div class="idx">01</div><h3>Source &amp; bid</h3><p>We shortlist units against your budget and specs, then bid at Japanese or UK auction on your behalf.</p></div>
-        <div class="step glass"><div class="idx">02</div><h3>Inspect &amp; ship</h3><p>Pre-shipment inspection, then consolidation into a container bound for Mombasa.</p></div>
-        <div class="step glass"><div class="idx">03</div><h3>Clear &amp; duty</h3><p>KRA duty computed against the current CRSP, KEBS roadworthiness check, and bond release.</p></div>
-        <div class="step glass"><div class="idx">04</div><h3>Register &amp; deliver</h3><p>NTSA registration and number plates arranged, then delivery to Nairobi or your nearest town.</p></div>
-      </div>
-    </div>
-  </section>
+      <section class="block">
+        <div class="wrap">
+          <div class="block-head">
+            <div class="kicker">The process</div>
+            <h2>From auction bid to your logbook</h2>
+            <p class="lede">
+              Four stages, one point of contact. You get a WhatsApp update at every stage — no
+              chasing agents.
+            </p>
+          </div>
+          <div class="steps">
+            <div class="step glass">
+              <div class="idx">01</div>
+              <h3>Source &amp; bid</h3>
+              <p>
+                We shortlist units against your budget and specs, then bid at Japanese or UK auction
+                on your behalf.
+              </p>
+            </div>
+            <div class="step glass">
+              <div class="idx">02</div>
+              <h3>Inspect &amp; ship</h3>
+              <p>Pre-shipment inspection, then consolidation into a container bound for Mombasa.</p>
+            </div>
+            <div class="step glass">
+              <div class="idx">03</div>
+              <h3>Clear &amp; duty</h3>
+              <p>
+                KRA duty computed against the current CRSP, KEBS roadworthiness check, and bond
+                release.
+              </p>
+            </div>
+            <div class="step glass">
+              <div class="idx">04</div>
+              <h3>Register &amp; deliver</h3>
+              <p>
+                NTSA registration and number plates arranged, then delivery to Nairobi or your
+                nearest town.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <section class="block">
-    <div class="wrap">
-      <div class="quote-block glass">
-        <p class="quote">"They sent me the auction sheet before I paid a shilling. The car that arrived matched it down to the tyre wear."</p>
-        <div class="attrib">Wanjiru M. &middot; imported a 2021 Subaru Forester, Nairobi</div>
-      </div>
-    </div>
-  </section>
-</main>
+      <section class="block">
+        <div class="wrap">
+          <div class="quote-block glass">
+            <p class="quote">
+              "They sent me the auction sheet before I paid a shilling. The car that arrived matched
+              it down to the tyre wear."
+            </p>
+            <div class="attrib">Wanjiru M. &middot; imported a 2021 Subaru Forester, Nairobi</div>
+          </div>
+        </div>
+      </section>
+    </main>
 
-<site-footer></site-footer>
+    <site-footer></site-footer>
 
-<script type="module" src="js/main.js"></script>
-</body>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>
