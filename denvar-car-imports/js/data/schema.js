@@ -79,7 +79,10 @@ export function validateCar(car, { maxYear = new Date().getFullYear() + 1 } = {}
 // row is easy to find; duplicate ids are reported on the later record.
 export function validateCars(list, options) {
   if (!Array.isArray(list)) {
-    return { cars: [], problems: [{ index: -1, id: null, errors: ['data must be a list of cars'] }] };
+    return {
+      cars: [],
+      problems: [{ index: -1, id: null, errors: ['data must be a list of cars'] }],
+    };
   }
 
   const cars = [];
