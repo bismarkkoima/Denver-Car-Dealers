@@ -8,7 +8,7 @@ Stack stays light: HTML, CSS, vanilla JS first; adopt a bundler and framework on
 
 **Phase 1 — Design system & tokens. ✅ Done.** Extract colors, type scale, spacing, radii, glass levels and motion curves into `css/tokens.css`. Document each in a `/styleguide.html` page.
 
-**Phase 2 — Project tooling.** Add Vite, ESLint, Prettier, and a `package.json` with `dev`, `build`, `preview`. Move to ES modules; keep output static-hostable.
+**Phase 2 — Project tooling. ✅ Done.** Add Vite, ESLint, Prettier, and a `package.json` with `dev`, `build`, `preview`. Move to ES modules; keep output static-hostable.
 
 **Phase 3 — Componentization.** Break nav, footer, car card, filter bar, and stat panels into reusable modules (web components or template functions) so pages stop duplicating markup.
 
