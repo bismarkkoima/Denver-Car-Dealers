@@ -380,14 +380,38 @@ section.block {
   flex-direction: column;
   gap: 16px;
 }
-.car-card .origin-tag {
-  align-self: flex-start;
+.car-card .tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.car-card .origin-tag,
+.car-card .status-tag {
   font-size: 0.72rem;
   color: var(--gold-300);
   background: rgba(198, 162, 39, 0.14);
   border: 1px solid rgba(198, 162, 39, 0.3);
   padding: 4px 10px;
   border-radius: 999px;
+}
+.car-card .status-tag {
+  color: var(--ink);
+  background: var(--gold-400);
+  border-color: var(--gold-400);
+  font-weight: 600;
+}
+.grid-message {
+  grid-column: 1 / -1;
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.grid-message a {
+  color: var(--gold-300);
+}
+car-grid[aria-busy='true'] {
+  min-height: 320px;
 }
 .car-card h3 {
   font-size: 1.28rem;
