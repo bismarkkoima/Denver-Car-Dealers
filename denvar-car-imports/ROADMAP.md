@@ -16,7 +16,7 @@ Stack stays light: HTML, CSS, vanilla JS first; adopt a bundler and framework on
 
 ## The Multiverse Shell
 
-**Phase 5 — Universe concept & map.** Define the "worlds": Japan, UK, UAE, Port of Mombasa, Showroom. Build a hub page: a glass constellation map where each world is a node you enter.
+**Phase 5 — Universe concept & map. ✅ Done.** Define the "worlds": Japan, UK, UAE, Port of Mombasa, Showroom. Build a hub page: a glass constellation map where each world is a node you enter.
 
 **Phase 6 — Seamless page transitions.** View Transitions API with a fallback, so moving between worlds morphs shared elements (car card to detail, nav pill to new page) rather than hard-reloading.
 
