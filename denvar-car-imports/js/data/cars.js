@@ -13,7 +13,9 @@ export function loadCars() {
   pending ??= Promise.resolve().then(() => {
     const { cars, problems } = validateCars(raw);
     if (problems.length) {
-      console.warn(`Skipped ${problems.length} invalid car record(s):\n${describeProblems(problems)}`);
+      console.warn(
+        `Skipped ${problems.length} invalid car record(s):\n${describeProblems(problems)}`
+      );
     }
     return cars;
   });
